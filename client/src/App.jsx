@@ -22,7 +22,7 @@ const App = () => {
       return;
     }
 
-    axios.get('http://localhost:3000/dealership-data', {
+    axios.get('http://localhost:3000/plant-data', {
       params: {
         year: year,
         model: model,
