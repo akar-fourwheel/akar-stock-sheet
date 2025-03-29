@@ -2,18 +2,26 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
+import formInfo from '../carScheme.json'
+
 const App = () => {
-  const [getYear, setGetYear] = useState([]);
   const [year, setYear] = useState('');
-  const [getModel, setGetModel] = useState([]);
   const [model, setModel] = useState('');
-  const [getFuel, setGetFuel] = useState([]);
   const [fuel, setFuel] = useState('');
-  const [finalData,setFinalData] = useState([])
+  const [fuelList, setFuelList] = useState('');
+  const [sub,setSub] = useState(true);
+  const [gotResponse,setGotResponse] = useState(false);
+  const [finalData,setFinalData] = useState([]);
 
   // Handle form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => {    
     e.preventDefault();
+
+    if (!year || !model || !fuel) {
+      alert("Please select year, model, and fuel type.");
+      return;
+    }
+
     axios.get('http://localhost:3000/dealership-data', {
       params: {
         year: year,
@@ -24,66 +32,33 @@ const App = () => {
     .then((response) => {
       const data = response.data;
       setFinalData(data);
+      setGotResponse(true);
       console.log(data);
       
     });
   };
 
-  const dataBasedOnYear = (e) => {
-    const selectedYear = e.target.value;
-    setYear(selectedYear);
+  const handleYearChange = (e) =>{
+    setYear(e.target.value);
+    setModel('');
+    setFuelList([]);
+    
+  }
 
-    // Fetch models based on selected year
-    axios
-      .get('http://localhost:3000/dealership-data', {
-        params: { year: selectedYear },
-      })
-      .then((response) => {
-        const data = response.data.flat();
-        setGetModel(data);
-        setGetFuel([]); // Clear fuel options when the year is changed
-      });
-  };
+  const handleModelChange = (e) => {
+    setModel(e.target.value);
+    setFuelList([])
+    setFuelList(formInfo[year][e.target.value]);
+  }
 
-  // Fetch models and fuel based on year and model
-  const dataBasedOnYearAndModel = (e) => {
-    const selectedModel = e.target.value;
-    setModel(selectedModel);
-
-    axios
-      .get('http://localhost:3000/dealership-data', {
-        params: {
-          year: year,
-          model: selectedModel,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        
-        if(response.data=="data not found") return;
-        const data = response.data.flat();
-        setGetFuel(data); // Assuming fuel types are returned based on year and model
-      });
-  };
-
-  // Fetch data when the year or model or fuel is selected
-
-
-  // useEffect(() => {
-  // }, [finalData]);
+  const handleFuelChange = (e) => {
+    setFuel(e.target.value);
+  }
 
   useEffect(() => {
-    // Fetch years initially
-    axios
-      .get('http://localhost:3000/dealership-data')
-      .then((response) => {
-        const fetchedYears = response.data.flat();
-        setGetYear(fetchedYears);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+    if(year && model && fuel) setSub(false);
+    else setSub(true);
+  },[year,model,fuel])
 
   return (
     <div className="m-auto w-full max-w-4xl p-4">
@@ -94,11 +69,11 @@ const App = () => {
       <label className="block text-lg">Year:</label>
       <select
         name="selectedYear"
-        onChange={dataBasedOnYear}
+        onChange={handleYearChange}
         className="w-full p-2 border border-gray-300 rounded-lg"
       >
         <option value="">Choose year</option>
-        {getYear.map((yr) => (
+        {Object.keys(formInfo).map((yr) => (
           <option value={yr} key={yr}>
             {yr}
           </option>
@@ -110,11 +85,11 @@ const App = () => {
       <label className="block text-lg">Model:</label>
       <select
         name="selectedModel"
-        onChange={dataBasedOnYearAndModel}
+        onChange={handleModelChange}
         className="w-full p-2 border border-gray-300 rounded-lg"
       >
         <option value="">Choose model</option>
-        {getModel.map((m) => (
+        {year && Object.keys(formInfo[year]).map((m) => (
           <option value={m} key={m}>
             {m}
           </option>
@@ -126,12 +101,12 @@ const App = () => {
       <label className="block text-lg">Fuel:</label>
       <select
         name="selectedFuel"
-        onChange={(e) => setFuel(e.target.value)}
+        onChange={handleFuelChange}
         className="w-full p-2 border border-gray-300 rounded-lg"
         //disabled={!getFuel.length} // Disable fuel select until data is available
       >
         <option value="">Choose fuel type</option>
-        {getFuel.map((f) => (
+        {model && fuelList.map((f) => (
           <option value={f} key={f}>
             {f}
           </option>
@@ -141,19 +116,23 @@ const App = () => {
 
     <button
       type="submit"
+      disabled={sub}
       className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"
     >
       Submit
     </button>
   </form>
-
-  <div className="overflow-x-auto mt-6">
+    {gotResponse && finalData.length==0 && 
+    <h5 className='text-red-400 p-2'>No related cars available in dealership right now ☹️!</h5>
+    }
+    { finalData.length > 0 &&
+    <div className="overflow-x-auto mt-6">
     <table className="min-w-full table-auto border-collapse">
       <thead>
         <tr className="bg-sky-400">
-          <th className="border border-solid p-2 text-white">YEAR</th>
+          {/* <th className="border border-solid p-2 text-white">YEAR</th>
           <th className="border border-solid p-2 text-white">MODEL</th>
-          <th className="border border-solid p-2 text-white">FUEL</th>
+          <th className="border border-solid p-2 text-white">FUEL</th> */}
           <th className="border border-solid p-2 text-white">VARIANT</th>
           <th className="border border-solid p-2 text-white">COLOR</th>
           <th className="border border-solid p-2 text-white">QUANTITY</th>
@@ -178,6 +157,7 @@ const App = () => {
       </tbody>
     </table>
   </div>
+  }
 </div>
   );
 };
