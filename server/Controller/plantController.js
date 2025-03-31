@@ -25,7 +25,6 @@ const plantFormData = async (req, res) => {
       const filteredData = rows.filter(row => !row.includes(0));
 
       res.send(filteredData);
-      console.log(filteredData);
     }
   catch(e){
     res.send("data not found");

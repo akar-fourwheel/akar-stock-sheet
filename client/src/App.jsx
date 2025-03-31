@@ -4,6 +4,7 @@ import './App.css';
 import formInfo from '../carScheme.json'
 import DealerContent from './Components/DealerContent';
 import ZoneContent from './Components/zoneContent';
+import PlantContent from './Components/PlantContent';
 
 const App = () => {
   const [year, setYear] = useState('');
@@ -26,7 +27,8 @@ const App = () => {
 
     var apiLink;
     if(selectedOption=='dealerStock') apiLink = 'dealership-data'
-    else if(selectedOption=='zonal') apiLink = 'zonal-stock'
+    else if(selectedOption=='zonalStock') apiLink = 'zonal-stock'
+    else if(selectedOption=='plantStock') apiLink = 'plant-data'
 
     axios.get(`http://localhost:3000/${apiLink}`, {
       params: {
@@ -124,7 +126,7 @@ const App = () => {
       </select>
     </div>
     <div className="space-y-2">
-    <label className="block text-lg">Select Option:</label>
+    <label className="block text-lg">Select Stock Location:</label>
     <div className="flex gap-4">
       <button
         type="button"
@@ -135,17 +137,17 @@ const App = () => {
       </button>
       <button
         type="button"
-        className={`w-full py-2 px-4 text-lg rounded-lg border border-gray-300 ${selectedOption === 'zonal' ? 'bg-blue-500 text-white' : 'bg-white'}`}
-        onClick={() => handleOptionSelect('zonal')}
+        className={`w-full py-2 px-4 text-lg rounded-lg border border-gray-300 ${selectedOption === 'zonalStock' ? 'bg-blue-500 text-white' : 'bg-white'}`}
+        onClick={() => handleOptionSelect('zonalStock')}
       >
         zonal
       </button>
       <button
         type="button"
-        className={`w-full py-2 px-4 text-lg rounded-lg border border-gray-300 ${selectedOption === 'last' ? 'bg-blue-500 text-white' : 'bg-white'}`}
-        onClick={() => handleOptionSelect('last')}
+        className={`w-full py-2 px-4 text-lg rounded-lg border border-gray-300 ${selectedOption === 'plantStock' ? 'bg-blue-500 text-white' : 'bg-white'}`}
+        onClick={() => handleOptionSelect('plantStock')}
       >
-        Last
+        plant
       </button>
     </div>
   </div>
@@ -161,7 +163,8 @@ const App = () => {
     <h5 className='text-red-400 p-2'>No related cars available in dealership right now ☹️!</h5>
     }
     { finalData.length > 0 && selectedOption=='dealerStock' && <DealerContent finalData={finalData}></DealerContent> }
-    { finalData.length > 0 && selectedOption=='zonal' && <ZoneContent finalData={finalData}></ZoneContent> }
+    { finalData.length > 0 && selectedOption=='zonalStock' && <ZoneContent finalData={finalData}></ZoneContent> }
+    { finalData.length > 0 && selectedOption=='plantStock' && <PlantContent finalData={finalData}></PlantContent> }
 </div>
   );
 };

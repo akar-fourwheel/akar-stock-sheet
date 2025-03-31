@@ -10,6 +10,7 @@ const PORT = 3000;
 
 app.use(dealerRoute);
 app.use(zonalRoute);
+app.use(plantRoute);
 
 app.listen(PORT, () => {
     console.log(`Server is listening at http://localhost:${PORT}`);
