@@ -2,7 +2,7 @@
 const SHEET_ID = '1FvTw2uAgYmroZKugMuAlvC5fz3v6YfQy';
 
 
-const zonalFormData = async (req, res) => {
+const zawlFormData = async (req, res) => {
 
     const {'year':carYear,'model':carModel,'fuel':carFuel} = req.query;
     
@@ -11,6 +11,9 @@ const zonalFormData = async (req, res) => {
     if(carYear && carModel && carFuel){
       query = encodeURIComponent(`SELECT C,F,K,R,U WHERE M=${carYear} AND D='${carModel}' AND B='${carFuel}' AND G='Rajasthan' AND L='Available'`) // year is in number
       // need to figure out how to group by
+    }
+    else{
+      res.status(422).send("incomplete details")
     }
   
   
@@ -25,13 +28,12 @@ const zonalFormData = async (req, res) => {
       const data = JSON.parse(jsonText);
       
       const rows = data.table.rows.map(row => row.c.map(cell => (cell ? cell.v : null)));
-      console.log(rows);
       
-      res.send(rows); 
+      res.status(200).send(rows); 
     }
   catch(e){
-    res.send("data not found");
+    res.status(404).send("data not found");
   }
 }
 
-export default zonalFormData;
+export default zawlFormData;

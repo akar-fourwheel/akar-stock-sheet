@@ -1,16 +1,18 @@
-function DealerContent({responseData}){
+function ZawlContent({responseData}){
     return (
     <div className="overflow-x-auto mt-6">
-    <table className="max-w-full table-auto border-collapse">
+    <table className="min-w-full table-auto border-collapse">
       <thead>
         <tr className="bg-sky-400">
           {/* <th className="border border-solid p-2 text-white">YEAR</th>
           <th className="border border-solid p-2 text-white">MODEL</th>
           <th className="border border-solid p-2 text-white">FUEL</th> */}
-          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">VARIANT</th>
-          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">COLOR</th>
-          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">QUANT.</th>
-          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">BOOKING</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Dealer</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">City</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Age</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Varient</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Color</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Enquiry</th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +25,7 @@ function DealerContent({responseData}){
             ))}
             <td className="border border-solid p-2">
               <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
-                Book
+                Contact
               </button>
             </td>
           </tr>
@@ -34,4 +36,4 @@ function DealerContent({responseData}){
     )
 }
 
-export default DealerContent;
+export default ZawlContent;

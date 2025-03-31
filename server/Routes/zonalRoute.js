@@ -9,6 +9,6 @@ var corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
 
-dealerRoute.get('/zonal-stock',cors(corsOptions),zonalController);
+dealerRoute.get('/zonal-data',cors(corsOptions),zonalController);
 
 export default dealerRoute;
