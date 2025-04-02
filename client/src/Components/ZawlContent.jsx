@@ -7,11 +7,10 @@ function ZawlContent({responseData}){
           {/* <th className="border border-solid p-2 text-white">YEAR</th>
           <th className="border border-solid p-2 text-white">MODEL</th>
           <th className="border border-solid p-2 text-white">FUEL</th> */}
-          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Dealer</th>
-          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">City</th>
-          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Age</th>
           <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Varient</th>
           <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Color</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Quantity</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">TML POST GST</th>
           <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Enquiry</th>
         </tr>
       </thead>

@@ -9,6 +9,7 @@ function DealerContent({responseData}){
           <th className="border border-solid p-2 text-white">FUEL</th> */}
           <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">VARIANT</th>
           <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">COLOR</th>
+          <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">Age</th>
           <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">QUANT.</th>
           <th className="border border-solid md:p-2 p-1 text-[12px] md:text-sm text-white">BOOKING</th>
         </tr>
