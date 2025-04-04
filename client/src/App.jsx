@@ -33,7 +33,7 @@ const App = () => {
       return;
     }
 
-    axios.get(`http://localhost:3000/${apiLink}`, {
+    axios.get(`http://localhost:3000/stock/${apiLink}`, {
       params: {
         year: year,
         model: model,

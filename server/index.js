@@ -1,18 +1,16 @@
 import express from 'express'
+import cors from 'cors'
 import 'dotenv/config'
-import dealerRoute from './Routes/dealerRoutes.js'
-import zonalRoute from './Routes/zonalRoute.js'
-import plantRoute from './Routes/plantRoutes.js'
-import zawlRoute from './Routes/zawlRoutes.js'
+import stockSheetRoute from './Routes/stockSheets.js'
+import corsOptions from './mixins/corsOptions.js';
 
 const app = express();
 const PORT = 3000;
 // require('dotenv').config()
 
-app.use(dealerRoute);
-app.use(zonalRoute);
-app.use(plantRoute);
-app.use(zawlRoute);
+app.use(cors(corsOptions))
+
+app.use(stockSheetRoute);
 
 app.listen(PORT, () => {
     console.log(`Server is listening at http://localhost:${PORT}`);
