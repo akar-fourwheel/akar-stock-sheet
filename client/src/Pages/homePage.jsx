@@ -20,6 +20,14 @@ const homePage = (req,res) => {
                 Scheme Sheet
               </button>
               </Link>
+              <Link to='/quotation'>
+              <button
+                type="button"
+                className={`w-full py-2 px-4 text-lg rounded-lg border border-gray-300 bg-blue-500 text-white cursor-pointer`}
+              >
+                Quotation
+              </button>
+              </Link>
             </div>
         </div>   
     )
