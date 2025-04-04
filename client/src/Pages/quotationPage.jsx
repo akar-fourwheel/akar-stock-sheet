@@ -339,7 +339,7 @@ const quotationPage = () => {
 
       try {
         setLoading(true);
-        const response = await axios.post("http://localhost:4000/generate-pdf", Qdata, {
+        const response = await axios.post("http://localhost:3000/generate-pdf", Qdata, {
           responseType: "blob", // Important to receive file as a blob
         });
   
