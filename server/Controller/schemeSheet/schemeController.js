@@ -6,14 +6,32 @@ const schemeController = async (req,res) => {
 
     const {'year':carYear,'model':carModel,'fuel':carFuel, 'variant': carVariant} = req.query;
     console.log(carYear, carModel, carFuel);
+    
+    let query;
 
     const token = await googleSecurityHeader();
+    
+    if(!carYear && !carModel && !carFuel && !carVariant){
+        query = encodeURIComponent("SELECT MAX(A) GROUP BY A")
+      }
+    
+      if(carYear && !carModel && !carFuel && !carVariant){
+        query =encodeURIComponent(`SELECT MAX(B) WHERE A = '${carYear}' GROUP BY B`)
+      }
+    
+      if(carYear && carModel && !carFuel && !carVariant){
+        query = encodeURIComponent(`SELECT MAX(C) WHERE A = '${carYear}' AND B='${carModel}' GROUP BY C`)
+      }
+    
+      if(carYear && carModel && carFuel && !carVariant){
+        query = encodeURIComponent(`SELECT MAX(D) WHERE A = '${carYear}' AND B='${carModel}' AND C='${carFuel}' GROUP BY D`)
+      }
+     
+      if(carYear && carModel && carFuel && carVariant){
+        query = encodeURIComponent(`SELECT E, F, G, H, I, J, K, L, M WHERE A = '${carYear}' AND B='${carModel}' AND C='${carFuel}' AND D='${carVariant}'`)
+      }
+
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq=${query}&access_token=${token}`;
-    let query;
-  
-    if(carYear && carModel && carFuel){
-      query = encodeURIComponent(`SELECT L, N,C, COUNT(L) WHERE D = '${carYear}' AND J='${carModel}' AND K='${carFuel}' GROUP BY D, J, K, L, N,C ORDER BY C DESC`)
-    }
   
     try{
         const resu = await fetch(url);
