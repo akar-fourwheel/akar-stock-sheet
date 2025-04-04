@@ -3,6 +3,7 @@ import App from '../App';
 
 import StockPage from '../Pages/stockPage';
 import SchemePage from '../Pages/schemePage';
+import QuotationPage from '../Pages/quotationPage'
 
 export const routes = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ export const routes = createBrowserRouter([
     {
         path:'/scheme-sheet',
         Component: SchemePage
+    },
+    {
+        path:'/quotation',
+        Component:QuotationPage
     }
 ])
 

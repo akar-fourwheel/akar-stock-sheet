@@ -34,7 +34,12 @@ const handleSubmit = (e) => {
 const dataBasedOnYear = (e) => {
   const selectedYear = e.target.value;
   setYear(selectedYear);
-
+  setModel('');
+  setGetModel([]);
+  setFuel('');
+  setGetFuel([]);
+  setVariant('');
+  setGetVariant([]);
   // Fetch models based on selected year
   axios
     .get('http://localhost:3000/scheme-data', {
@@ -42,8 +47,7 @@ const dataBasedOnYear = (e) => {
     })
     .then((response) => {
       const data = response.data.flat();
-      setGetModel(data);
-      setGetFuel([]); // Clear fuel options when the year is changed
+      setGetModel(data); // Clear fuel options when the year is changed
     });
 };
 
@@ -51,7 +55,10 @@ const dataBasedOnYear = (e) => {
 const dataBasedOnYearAndModel = (e) => {
   const selectedModel = e.target.value;
   setModel(selectedModel);
-
+  setFuel('');
+  setGetFuel([]);
+  setVariant('');
+  setGetVariant([]);
   axios
     .get('http://localhost:3000/scheme-data', {
       params: {
@@ -72,8 +79,9 @@ const dataBasedOnYearAndModel = (e) => {
 const dataBasedOnYearModelAndFuel = (e) => {
   const selectedFuel = e.target.value;
   setFuel(selectedFuel);
+  setVariant('');
+  setGetVariant([]);
   console.log(model);
-  
 
   axios
     .get('http://localhost:3000/scheme-data', {

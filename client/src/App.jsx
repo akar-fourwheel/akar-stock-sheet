@@ -1,9 +1,10 @@
 import './App.css';
-import StockPage from './Pages/stockPage';
+import HomePage from './Pages/homePage';
 
 const App = () => {
  return (
   <>
+    <HomePage></HomePage>
   </>
  )
 };
