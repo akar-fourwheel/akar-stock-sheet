@@ -1,5 +1,4 @@
 import express from 'express'
-import cors from 'cors'
 
 import dealerController from '../Controller/stockSheet/dealerController.js'
 import plantController from '../Controller/stockSheet/plantController.js'
