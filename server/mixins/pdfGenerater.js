@@ -133,7 +133,7 @@ const generatePDF = async (req, res) => {
     await appendToSheet(Qdata);
     const whatsAppUrl = sendWhatsapp(Qdata);
 
-    res.status(200).send(whatsAppUrl);
+    res.status(200).send({whatsAppUrl,publicUrl});
   } catch (error) {
     console.error("Error generating or uploading PDF:", error);
     res.status(500).send("Error generating or uploading PDF");
