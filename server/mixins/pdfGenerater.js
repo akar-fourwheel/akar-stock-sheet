@@ -6,6 +6,7 @@ import { serviceAccountAuth } from "./googleSecurityHeader.js";
 import { google } from "googleapis";
 import randomID from '../mixins/randomID.js'
 import { Readable } from "stream";
+import sendWhatsapp from "./sendWhatsApp.js";
 
 // ES Module-compatible __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -130,9 +131,9 @@ const generatePDF = async (req, res) => {
     Qdata.fileUrl = publicUrl;
 
     await appendToSheet(Qdata);
-    
+    const whatsAppUrl = sendWhatsapp(Qdata);
 
-    res.status(200).json({ fileId });
+    res.status(200).send(whatsAppUrl);
   } catch (error) {
     console.error("Error generating or uploading PDF:", error);
     res.status(500).send("Error generating or uploading PDF");

@@ -400,22 +400,11 @@ const quotationPage = () => {
         setLoading(true);
       
         const response = await axios.post("http://localhost:3000/generate-pdf", Qdata);
-        const { fileId } = response.data;
+        const whatsAppUrl = response.data;
       
-        if (fileId) {
-          //const driveLink = `https://drive.google.com/file/d/${fileId}/view`;
-          console.log(fileId);
+        if (whatsAppUrl) {
+          window.open(whatsAppUrl, "_blank");
           
-          
-          // Option 1: Open preview in a new tab
-          //window.open(driveLink, "_blank");
-      
-          // Option 2 (optional): create a clickable link
-          // const link = document.createElement("a");
-          // link.href = driveLink;
-          // link.setAttribute("target", "_blank");
-          // link.textContent = "View Quotation";
-          // document.body.appendChild(link);
         } else {
           console.error("No fileId returned");
         }
