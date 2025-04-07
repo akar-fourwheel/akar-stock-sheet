@@ -22,6 +22,9 @@ const options = {
   border: "10mm",
 };
 
+console.log(options);
+
+
 // Initialize Drive API
 const drive = google.drive({ version: "v3", auth: serviceAccountAuth });
 const sheets = google.sheets({ version: "v4", auth: serviceAccountAuth });
