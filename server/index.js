@@ -12,7 +12,7 @@ import quotationRoute from './Routes/quotationRoute.js';
 import pdfRoute from './Routes/pdfRoute.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 app.use(cors(corsOptions))
 app.use(bodyParser.json());
@@ -23,6 +23,6 @@ app.use(quotationRoute);
 app.use(pdfRoute);
 
 
-app.listen(PORT, () => {
-    console.log(`Server is listening at http://localhost:${PORT}`);
+app.listen(process.env.PORT || PORT, () => {
+    console.log(`Server is listening at http://192.168.0.26:${PORT}`);
 });
