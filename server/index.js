@@ -23,6 +23,6 @@ app.use(quotationRoute);
 app.use(pdfRoute);
 
 
-app.listen(PORT, () => {
+app.listen(80, "192.168.0.31", () => {
     console.log(`Server is listening at http://localhost:${PORT}`);
 });

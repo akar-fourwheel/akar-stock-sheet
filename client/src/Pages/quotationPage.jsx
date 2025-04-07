@@ -403,7 +403,7 @@ const quotationPage = () => {
         const whatsAppUrl = response.data;
       
         if (whatsAppUrl) {
-          window.open(whatsAppUrl, "_blank");
+          window.location.href = whatsAppUrl;
           
         } else {
           console.error("No fileId returned");
