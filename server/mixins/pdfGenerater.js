@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { serviceAccountAuth } from "./googleSecurityHeader.js";
 import { google } from "googleapis";
 import mime from "mime-types";
+import randomID from '../mixins/randomID.js'
 
 // ES Module-compatible __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -101,8 +102,19 @@ const makeFilePublic = async (fileId) => {
 // API Route to Generate PDF and Upload to Folder
 const generatePDF = async (req, res) => {
   try {
-    const Qdata = req.body;
 
+    const Qname = req.body.name;
+    const Qmobile = req.body.mobile;
+    const Qdate = req.body.date;
+    const Qbody = req.body;
+    
+    const randomId = await randomID(Qname,Qmobile,Qdate);
+    console.log(randomId);
+    
+
+    const Qdata = {...{quotationID:randomId},...Qbody}
+    console.log(Qdata);
+    
     const outputPath = path.join(__dirname, "output.pdf");
 
     const document = {
@@ -115,7 +127,7 @@ const generatePDF = async (req, res) => {
     await pdf.create(document, options);
 
     // Upload to a specific folder
-    const fileId = await uploadToDrive(outputPath, `${Qdata.name}_${Qdata.mobile}.pdf`, QUOTATION_FOLDER_ID);
+    const fileId = await uploadToDrive(outputPath, `${Qdata.name}_${randomId}.pdf`, QUOTATION_FOLDER_ID);
     const publicUrl = await makeFilePublic(fileId);
     Qdata.fileUrl = publicUrl;
 
