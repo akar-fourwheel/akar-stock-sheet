@@ -23,9 +23,47 @@ const options = {
 
 // Initialize Drive API
 const drive = google.drive({ version: "v3", auth: serviceAccountAuth });
+const sheets = google.sheets({ version: "v4", auth: serviceAccountAuth });
 
 // 👇 Define your target Google Drive folder ID here
 const QUOTATION_FOLDER_ID = "1jsoZz9jDWXMVvL4AIphGok1A7mhKfYET";
+const SPREADSHEET_ID = "1H-O8RrC31_TWMJ-QxCBSO7UXXRFTYUQ9Uz8Rvpv2Nkc";
+const SHEET_NAME = "QuotationSheet";
+
+const flattenJSON = (obj, prefix = "") => {
+  return Object.keys(obj).reduce((acc, k) => {
+    const pre = prefix.length ? `${prefix}.${k}` : k;
+    if (typeof obj[k] === "object" && obj[k] !== null && !Array.isArray(obj[k])) {
+      Object.assign(acc, flattenJSON(obj[k], pre));
+    } else {
+      acc[pre] = Array.isArray(obj[k]) ? JSON.stringify(obj[k]) : obj[k];
+    }
+    return acc;
+  }, {});
+};
+
+const appendToSheet = async (Qdata) => {
+  try {
+    const flatData = flattenJSON(Qdata);
+
+    const headers = Object.keys(flatData);
+    const row = Object.values(flatData);
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_NAME}`,
+      valueInputOption: "RAW",
+      insertDataOption: "INSERT_ROWS",
+      requestBody: {
+        values: [row],
+      },
+    });
+
+    console.log("Quotation data added to sheet.");
+  } catch (err) {
+    console.error("Error adding to Google Sheet:", err);
+  }
+};
 
 // Upload function with folder support
 const uploadToDrive = async (filePath, filename, folderId) => {
@@ -81,7 +119,7 @@ const generatePDF = async (req, res) => {
     const publicUrl = await makeFilePublic(fileId);
     Qdata.fileUrl = publicUrl;
 
-    console.log(Qdata);
+    await appendToSheet(Qdata);
     
 
     res.status(200).json({ fileId });
