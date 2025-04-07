@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Select from "react-select";
+import { Fragment } from 'react';
 
 import salesPersonList from '../../salesPerson.json'
 
@@ -122,7 +123,6 @@ const quotationPage = () => {
       const data = JSON.parse(response.data[0]);
       const data1 = JSON.parse(response.data[1]);
       const data2 = JSON.parse(response.data[2]);
-      console.log(data2);
       setColor(data2);
       setAccessories(data1)
       setFinalData(data);
@@ -157,9 +157,7 @@ const quotationPage = () => {
           model: selectedModel,
         },
       })
-      .then((response) => {
-        console.log(response.data);
-        
+      .then((response) => {        
         if(response.data=="data not found") return;
         const data = response.data.flat();
         setGetFuel(data); // Assuming fuel types are returned based on year and model
@@ -170,7 +168,6 @@ const quotationPage = () => {
   const dataBasedOnYearModelAndFuel = (e) => {
     const selectedFuel = e.target.value;
     setFuel(selectedFuel);
-    console.log(model);
     
   
     axios
@@ -181,9 +178,7 @@ const quotationPage = () => {
           fuel: selectedFuel
         },
       })
-      .then((response) => {
-        console.log(response.data);
-        
+      .then((response) => {        
         if(response.data === "data not found") return;
         const data = response.data.flat();
         setGetVariant(data); // Correctly updating variants
@@ -212,7 +207,6 @@ const quotationPage = () => {
     }, 0) + Number(addDisc) + Number(sss);
 
     setTotalDisc(newTotal);
-    console.log(newTotal);
   }, [selectedDiscounts, addExc, loyalty, corpOffer, addDisc, sss]);
 
   useEffect(() => {
@@ -278,11 +272,12 @@ const quotationPage = () => {
   }
 
   const handleColor = (selected) => {
-    selected && setSelectedColor(selected.value)
+    selected ? setSelectedColor(selected.value) : setSelectedColor("N/A")
   }
 
   const handleVas = (selected) => {
-    setSelectedVas(selected)
+    selected ? setSelectedVas(selected) : setSelectedVas("N/A")
+    
   }
 
   const handleHpn = (selected) => {
@@ -345,7 +340,7 @@ const quotationPage = () => {
       model: finalData.PPL, 
       fuel: finalData.Fuel, 
       varient: finalData.Variant,
-      color: selectedColor, 
+      color: selectedColor ? selectedColor : "N/A", 
       ESP: finalData.ESP, 
       consumerDisc: (selectedDiscounts.some((opt) => opt.value === "CONSUMER") ? finalData.CONSUMER : 0), 
       interventionDisc: (selectedDiscounts.some((opt) => opt.value === "INTERVENTION") ? finalData.INTERVENTION : 0), 
@@ -392,10 +387,10 @@ const quotationPage = () => {
       personalBelong: (selectedInsurance.some((opt) => opt.value === "Personal Belongings") ? finalData["Personal Belongings"] : 0), 
       batteryP: (selectedInsurance.some((opt) => opt.value === "Battery Protection") ? finalData["Battery Protection"] : 0), 
       incTotal: totalAddOns + finalData.Insurance, 
-      ewType: ew, 
-      ew: finalData[ew], 
-      vasType: selectedVas ? selectedVas.label : "", 
-      vas: selectedVas ? selectedVas.value : 0, 
+      ewType: ew ? ew : " ", 
+      ew: ew ? finalData[ew] : " ", 
+      vasType: selectedVas ? selectedVas.label : " ", 
+      vas: selectedVas ? selectedVas.value : " ", 
       fasttag: finalData.FastTag, 
       grandTotal: totalESP, };
 
@@ -577,14 +572,14 @@ const quotationPage = () => {
   <div className="overflow-x-auto mt-6">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {Object.keys(finalData).map((key, i) => (
-            <>
+            <Fragment key={i}>
               {(i >= 20 && i<= 26) ?
                 i == 20 &&
                   <>
                     <div>Select Insurance Add-ons:</div>
                     <Select
                       options={Object.keys(finalData)
-                        .filter((key, i) => (i >= 20 && i <= 26))
+                        .filter((key, i) => (i >= 20 && i <= 26 && finalData[key] > 0))
                         .map((key) => ({ value: key, label: key }))}
                       isMulti
                       value={selectedInsurance}
@@ -681,7 +676,6 @@ const quotationPage = () => {
                     <div>RTO Amount: </div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
                         {finalData[rto]}
-                        {console.log(finalData[rto])}
                       </div>
                     {(selectedDiscounts.some((opt) => opt.value === "EXCHANGE") && fuel == 'Electric') &&
                     <>
@@ -745,8 +739,7 @@ const quotationPage = () => {
                   <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[key]}</div>
                   {i == 32 && <>
                   <div>Total Price:</div>
-                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 30000 : 0)
-                                                                                /*console.log(finalData.ESP, totalDisc, (finalData[rto] ? finalData[rto] : 0), totalAddOns, finalData.Insurance, tcs, (finalData[ew] ? finalData[ew] : 0), accTotal , (selectedVas ? selectedVas.value : 0) , finalData.AMC , finalData.RSA , finalData.FastTag)*/}</div> 
+                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 30000 : 0)}</div> 
                   <button
                   type="button"
                   disabled={loading}
@@ -754,7 +747,7 @@ const quotationPage = () => {
                     {loading ? 'Generating Quotation...' : 'Generate Quotation'}
                   </button></>}
                 </>}
-            </>
+                </Fragment>
           ))}
         </div>
         

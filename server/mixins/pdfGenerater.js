@@ -1,12 +1,11 @@
 import pdf from "pdf-creator-node";
 import fs from "fs/promises";
-import fsSync from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { serviceAccountAuth } from "./googleSecurityHeader.js";
 import { google } from "googleapis";
-import mime from "mime-types";
 import randomID from '../mixins/randomID.js'
+import { Readable } from "stream";
 
 // ES Module-compatible __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -67,15 +66,17 @@ const appendToSheet = async (Qdata) => {
 };
 
 // Upload function with folder support
-const uploadToDrive = async (filePath, filename, folderId) => {
+const uploadToDrive = async (pdfBuffer, filename, folderId) => {
   const fileMetadata = {
     name: filename,
-    parents: [folderId], // 👈 Store in specific folder
+    parents: [folderId],
   };
 
   const media = {
-    mimeType: mime.lookup(filePath) || "application/pdf",
-    body: fsSync.createReadStream(filePath),
+    mimeType: "application/pdf",
+    body: Buffer.isBuffer(pdfBuffer)
+      ? Readable.from(pdfBuffer)
+      : pdfBuffer, // fallback
   };
 
   const response = await drive.files.create({
@@ -86,6 +87,7 @@ const uploadToDrive = async (filePath, filename, folderId) => {
 
   return response.data.id;
 };
+
 
 const makeFilePublic = async (fileId) => {
   await drive.permissions.create({
@@ -113,21 +115,17 @@ const generatePDF = async (req, res) => {
     
 
     const Qdata = {...{quotationID:randomId},...Qbody}
-    console.log(Qdata);
-    
-    const outputPath = path.join(__dirname, "output.pdf");
 
     const document = {
       html: htmlTemplate,
       data: { Qdata },
-      path: outputPath,
-      type: "",
+      type: "buffer",
     };
 
-    await pdf.create(document, options);
+    const pdfBuffer = await pdf.create(document, options);
 
     // Upload to a specific folder
-    const fileId = await uploadToDrive(outputPath, `${Qdata.name}_${randomId}.pdf`, QUOTATION_FOLDER_ID);
+    const fileId = await uploadToDrive(pdfBuffer, `${Qdata.name}_${randomId}.pdf`, QUOTATION_FOLDER_ID);
     const publicUrl = await makeFilePublic(fileId);
     Qdata.fileUrl = publicUrl;
 
