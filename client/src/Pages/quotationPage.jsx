@@ -729,17 +729,20 @@ const quotationPage = () => {
                   {i == 32 && <>
                   <div>Total Price:</div>
                   <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 30000 : 0)}</div> 
-                  <button
-                  type="button"
-                  disabled={loading}
-                   className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600" onClick={generatePDF}>
-                    {loading ? 'Generating Quotation...' : 'Generate Quotation'}
-                  </button></>}
+                  </>}
                 </>}
                 </Fragment>
           ))}
         </div>
-        
+        {Object.keys(finalData).length > 0 && <div className='block'>
+        <button
+        type="button"
+        disabled={loading}
+         className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600" onClick={generatePDF}>
+          {loading ? 'Generating Quotation...' : 'Generate Quotation'}
+        </button>
+        </div>
+        }
   </div>
 </div>
   );
