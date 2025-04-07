@@ -207,10 +207,12 @@ const quotationPage = () => {
 
   useEffect(() => {
     const newTotal = selectedDiscounts.reduce((accumulator, item) => {
-      return accumulator + (finalData[item.value] || 0) + addExc + loyalty + finalData[corpOffer];
+      console.log(finalData[item.value],  addExc , loyalty , finalData[corpOffer]);
+      return accumulator + (finalData[item.value] || 0) + addExc + loyalty + (finalData[corpOffer] || 0);
     }, 0) + Number(addDisc) + Number(sss);
 
     setTotalDisc(newTotal);
+    console.log(newTotal);
   }, [selectedDiscounts, addExc, loyalty, corpOffer, addDisc, sss]);
 
   useEffect(() => {
@@ -398,26 +400,32 @@ const quotationPage = () => {
 
       try {
         setLoading(true);
-        const response = await axios.post("http://localhost:3000/generate-pdf", Qdata, {
-          responseType: "blob", // Important to receive file as a blob
-        });
-  
-        // Create a URL for the file
-        const pdfBlob = new Blob([response.data], { type: "application/pdf" });
-        const pdfUrl = window.URL.createObjectURL(pdfBlob);
-  
-        // Create a download link
-        const link = document.createElement("a");
-        link.href = pdfUrl;
-        link.setAttribute("download", "Quotation.pdf");
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+      
+        const response = await axios.post("http://localhost:3000/generate-pdf", Qdata);
+        const { fileId } = response.data;
+      
+        if (fileId) {
+          //const driveLink = `https://drive.google.com/file/d/${fileId}/view`;
+          console.log(fileId);
+          
+          
+          // Option 1: Open preview in a new tab
+          //window.open(driveLink, "_blank");
+      
+          // Option 2 (optional): create a clickable link
+          // const link = document.createElement("a");
+          // link.href = driveLink;
+          // link.setAttribute("target", "_blank");
+          // link.textContent = "View Quotation";
+          // document.body.appendChild(link);
+        } else {
+          console.error("No fileId returned");
+        }
       } catch (error) {
         console.error("Error generating PDF", error);
       } finally {
         setLoading(false);
-      }
+      }  
     };
 
     const filteredSalesPersons = salesPersonList.filter(person =>
@@ -670,6 +678,7 @@ const quotationPage = () => {
                     <div>RTO Amount: </div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
                         {finalData[rto]}
+                        {console.log(finalData[rto])}
                       </div>
                     {(selectedDiscounts.some((opt) => opt.value === "EXCHANGE") && fuel == 'Electric') &&
                     <>
