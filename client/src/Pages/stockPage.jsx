@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import formInfo from '../../carScheme.json'
-import DealerContent from '../Components/stockComponenets/DealerContent';
-import ZoneContent from '../Components/stockComponenets/zoneContent';
-import PlantContent from '../Components/stockComponenets/PlantContent';
-import ZawlContent from '../Components/stockComponenets/ZawlContent'
+import DealerContent from '../Components/stockComponents/DealerContent';
+import ZoneContent from '../Components/stockComponents/ZoneContent';
+import PlantContent from '../Components/stockComponents/PlantContent';
+import ZawlContent from '../Components/stockComponents/ZawlContent'
 
 const stockPage = () => {
   const [year, setYear] = useState('');
