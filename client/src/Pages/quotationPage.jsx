@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Select from "react-select";
 
+import salesPersonList from '../../salesPerson.json'
+
 const quotationPage = () => {
   const [getYear, setGetYear] = useState([]);
   const [year, setYear] = useState('');
@@ -32,6 +34,20 @@ const quotationPage = () => {
   const [accTotal, setAccTotal] = useState(0);
   const [loyaltyType, setLoyaltyType] = useState();
   const [scrap, setScrap] = useState();
+  const [name,setName] = useState('');
+  const [phoneNo,setPhoneNo] = useState('');
+  const [email,setEmail] = useState('');
+  const [address,setAddress] = useState('');
+  const [currentDate, setCurrentDate] = useState("");
+  const [selectedSalesPerson, setSelectedSalesPerson] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
+    const [errors, setErrors] = useState({
+      name: false,
+      address: false,
+      phoneNo: false,
+      email: false,
+      selectedSalesPerson: false,
+    });
   const [loading, setLoading] = useState(false);
 
   let tcs, totalESP;
@@ -272,16 +288,58 @@ const quotationPage = () => {
   const handleHpn = (selected) => {
     setSelectedHpn(selected)
   }
+  
+  const validateForm = () => {
+    let isValid = true;
+    let validationErrors = {
+      name: false,
+      address: false,
+      phoneNo: false,
+      email: false,
+      selectedSalesPerson: false,
+    };
+
+    if (!name.trim()) {
+      validationErrors.name = true;
+      isValid = false;
+    }
+    if (!address.trim()) {
+      validationErrors.address = true;
+      isValid = false;
+    }
+    if (!phoneNo.trim() || !/^\d{10}$/.test(phoneNo)) {
+      validationErrors.phoneNo = true;
+      isValid = false;
+    }
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+      validationErrors.email = true;
+      isValid = false;
+    }
+    if (!selectedSalesPerson) {
+      validationErrors.selectedSalesPerson = true;
+      isValid = false;
+    }
+
+    setErrors(validationErrors);
+    if (!isValid) {
+      window.scrollTo(0, 0);
+    }
+
+    return isValid;
+  };
 
   const generatePDF = async () => {
+
+    if (!validateForm()) {
+      return; // Don't proceed if there are validation errors
+    }
     var Qdata = {
-      quotationID: 'xyz_123',
-      date: '01-01-2025',
-      name: "Shyam",
-      mobile: '123456',
-      email: "qwert@gmail.com", 
-      address: "qwertyuiop", 
-      salesPerson: 'dharmendar', 
+      date: currentDate,
+      name: name.toUpperCase(),
+      mobile: phoneNo,
+      email: email,
+      address: address, 
+      salesPerson: selectedSalesPerson, 
       HPN: (selectedHpn ? selectedHpn.value : "N/A"),
       year: finalData.YEAR, 
       model: finalData.PPL, 
@@ -373,10 +431,74 @@ const quotationPage = () => {
       }  
     };
 
+    const filteredSalesPersons = salesPersonList.filter(person =>
+      person.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    useEffect(() => {
+      // Get today's date in YYYY-MM-DD format
+      const today = new Date().toISOString().split('T')[0];
+      setCurrentDate(today);
+    }, []);
+
   return (
     <div className="m-auto w-full max-w-4xl p-4">
-  <h2 className="text-2xl font-semibold text-center mb-6">Test form for Quotation API</h2>
+  <h2 className="text-2xl font-semibold text-center mb-6">Test form for Quotation</h2>
   
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="col-span-1 sm:col-span-2 lg:col-span-2 space-y-2">
+        <label className="block text-lg">Customer Name:</label>
+        <input
+          type="text"
+          onChange={(e) => setName(e.target.value)}
+          className={`w-full p-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
+        />
+      </div>
+
+      <div className="col-span-1 sm:col-span-2 lg:col-span-2 space-y-2">
+        <label className="block text-lg">Address:</label>
+        <input
+          type="text"
+          onChange={(e) => setAddress(e.target.value)}
+          className={`w-full p-2 border ${errors.address ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
+        />
+      </div>
+
+      <div className="col-span-1 sm:col-span-2 lg:col-span-1 space-y-2">
+        <label className="block text-lg">Phone Number:</label>
+        <input
+          type="text"
+          onChange={(e) => setPhoneNo(e.target.value)}
+          className={`w-full p-2 border ${errors.phoneNo ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
+        />
+      </div>
+
+      <div className="col-span-1 sm:col-span-2 lg:col-span-2 space-y-2">
+        <label className="block text-lg">Email:</label>
+        <input
+          type="text"
+          onChange={(e) => setEmail(e.target.value)}
+          className={`w-full p-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
+        />
+      </div>
+
+      <div className="col-span-1 sm:col-span-2 lg:col-span-1 space-y-2">
+        <label className="block text-lg">Sales Person:</label>
+        <select
+          value={selectedSalesPerson}
+          onChange={(e) => setSelectedSalesPerson(e.target.value)}
+          className={`w-full p-2 border ${errors.selectedSalesPerson ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
+        >
+          <option value="">Select a Sales Person</option>
+          {salesPersonList.map((salesPerson, index) => (
+            <option key={index} value={salesPerson}>
+              {salesPerson}
+            </option>
+          ))}
+        </select>
+      </div>
+      </div>
+
   <form onSubmit={handleSubmit} className="space-y-4">
     <div className="space-y-2">
       <label className="block text-lg">Year:</label>
@@ -623,9 +745,13 @@ const quotationPage = () => {
                   <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[key]}</div>
                   {i == 32 && <>
                   <div>Total Price:</div>
-                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 30000 : 0)}</div> 
-                  <button className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600" onClick={generatePDF}>
-                    Submit
+                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 30000 : 0)
+                                                                                /*console.log(finalData.ESP, totalDisc, (finalData[rto] ? finalData[rto] : 0), totalAddOns, finalData.Insurance, tcs, (finalData[ew] ? finalData[ew] : 0), accTotal , (selectedVas ? selectedVas.value : 0) , finalData.AMC , finalData.RSA , finalData.FastTag)*/}</div> 
+                  <button
+                  type="button"
+                  disabled={loading}
+                   className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600" onClick={generatePDF}>
+                    {loading ? 'Generating Quotation...' : 'Generate Quotation'}
                   </button></>}
                 </>}
             </>
