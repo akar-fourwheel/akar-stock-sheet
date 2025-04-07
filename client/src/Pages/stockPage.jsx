@@ -32,7 +32,7 @@ const stockPage = () => {
       return;
     }
 
-    axios.get(`http://localhost:3000/stock/${apiLink}`, {
+    axios.get(`${import.meta.env.VITE_SERVER}stock/${apiLink}`, {
       params: {
         year: year,
         model: model,

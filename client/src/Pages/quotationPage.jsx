@@ -111,7 +111,7 @@ const quotationPage = () => {
   // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.get('http://localhost:3000/quotation-data', {
+    axios.get(`${import.meta.env.VITE_SERVER}quotation-data`, {
       params: {
         year: year,
         model: model,
@@ -135,7 +135,7 @@ const quotationPage = () => {
 
     // Fetch models based on selected year
     axios
-      .get('http://localhost:3000/quotation-data', {
+      .get(`${import.meta.env.VITE_SERVER}quotation-data`, {
         params: { year: selectedYear },
       })
       .then((response) => {
@@ -151,7 +151,7 @@ const quotationPage = () => {
     setModel(selectedModel);
 
     axios
-      .get('http://localhost:3000/quotation-data', {
+      .get(`${import.meta.env.VITE_SERVER}quotation-data`, {
         params: {
           year: year,
           model: selectedModel,
@@ -171,7 +171,7 @@ const quotationPage = () => {
     
   
     axios
-      .get('http://localhost:3000/quotation-data', {
+      .get(`${import.meta.env.VITE_SERVER}quotation-data`, {
         params: {
           year: year,
           model: model,
@@ -190,7 +190,7 @@ const quotationPage = () => {
   useEffect(() => {
     // Fetch years initially
     axios
-      .get('http://localhost:3000/quotation')
+      .get(`${import.meta.env.VITE_SERVER}quotation`)
       .then((response) => {
         const fetchedYears = response.data.flat();
         setGetYear(fetchedYears);
@@ -399,7 +399,7 @@ const quotationPage = () => {
       try {
         setLoading(true);
       
-        const response = await axios.post("http://localhost:3000/generate-pdf", Qdata);
+        const response = await axios.post(`${import.meta.env.VITE_SERVER}generate-pdf`, Qdata);
         const whatsAppUrl = response.data;
       
         if (whatsAppUrl) {
