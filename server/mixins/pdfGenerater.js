@@ -9,6 +9,11 @@ import fs from "fs/promises";
 import sendWhatsapp from "./sendWhatsApp.js";
 import Handlebars from "handlebars";
 
+const browser = await puppeteer.launch({
+  headless: true, // ← this is safer than "new" on remote servers
+  args: ["--no-sandbox", "--disable-setuid-sandbox"],
+});
+
 // Register ifCond helper globally
 Handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
   switch (operator) {
