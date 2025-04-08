@@ -5,7 +5,6 @@ const SHEET_ID = '1eKs7_vXp1bqlc2fUjpppYDXfB9YRENM_';
 const plantFormData = async (req, res) => {
 
     const {'year':carYear,'model':carModel,'fuel':carFuel} = req.query;
-    console.log(carYear,carFuel,carModel);
     
     let query;
   

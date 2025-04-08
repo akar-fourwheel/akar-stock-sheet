@@ -5,7 +5,6 @@ const SHEET_ID = '1xqIGEgdU5hMXrXdkddBR5teWKpd0baIGRW123WT7j1M';
 const schemeController = async (req,res) => {
 
     const {'year':carYear,'model':carModel,'fuel':carFuel, 'variant': carVariant} = req.query;
-    console.log(carYear, carModel, carFuel);
     
     let query;
 

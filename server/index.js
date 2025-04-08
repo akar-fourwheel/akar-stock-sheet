@@ -24,5 +24,5 @@ app.use(pdfRoute);
 
 
 app.listen(process.env.PORT || PORT, () => {
-    console.log(`Server is listening at http://localhost:${PORT}`);
+    console.log(`Server is live!`);
 });

@@ -26,7 +26,6 @@ const handleSubmit = (e) => {
   .then((response) => {
     const data = response.data.flat();
     setFinalData(data);
-    console.log(data);
     
   });
 };
@@ -66,9 +65,7 @@ const dataBasedOnYearAndModel = (e) => {
         model: selectedModel,
       },
     })
-    .then((response) => {
-      console.log(response.data);
-      
+    .then((response) => {      
       if(response.data=="data not found") return;
       const data = response.data.flat();
       setGetFuel(data); // Assuming fuel types are returned based on year and model
@@ -81,7 +78,6 @@ const dataBasedOnYearModelAndFuel = (e) => {
   setFuel(selectedFuel);
   setVariant('');
   setGetVariant([]);
-  console.log(model);
 
   axios
     .get(`${import.meta.env.VITE_SERVER}/scheme-data`, {
@@ -91,9 +87,7 @@ const dataBasedOnYearModelAndFuel = (e) => {
         fuel: selectedFuel
       },
     })
-    .then((response) => {
-      console.log(response.data);
-      
+    .then((response) => {      
       if(response.data === "data not found") return;
       const data = response.data.flat();
       setGetVariant(data); // Correctly updating variants

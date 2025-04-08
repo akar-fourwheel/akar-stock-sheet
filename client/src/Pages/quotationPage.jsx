@@ -204,7 +204,6 @@ const quotationPage = () => {
 
   useEffect(() => {
     const newTotal = selectedDiscounts.reduce((accumulator, item) => {
-      console.log(finalData[item.value],  addExc , loyalty , finalData[corpOffer]);
       return accumulator + (finalData[item.value] || 0) + addExc + loyalty + (finalData[corpOffer] || 0);
     }, 0) + Number(addDisc) + Number(sss);
 
@@ -395,8 +394,6 @@ const quotationPage = () => {
       vas: selectedVas ? selectedVas.value : " ", 
       fasttag: finalData.FastTag, 
       grandTotal: totalESP, };
-
-      console.log(Qdata);
 
       try {
         setLoading(true);

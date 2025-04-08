@@ -4,9 +4,7 @@ const SHEET_ID = '1H-O8RrC31_TWMJ-QxCBSO7UXXRFTYUQ9Uz8Rvpv2Nkc';
 
 const quotationController = async (req,res) =>{
     
-    const {'year':carYear,'model':carModel,'fuel':carFuel, 'variant': carVariant} = req.query;
-    console.log(carFuel,carModel,carYear,carVariant);
-    
+    const {'year':carYear,'model':carModel,'fuel':carFuel, 'variant': carVariant} = req.query;    
   
     let query, queryAcc, queryColor;
     if(!carYear && !carModel && !carFuel && !carVariant){

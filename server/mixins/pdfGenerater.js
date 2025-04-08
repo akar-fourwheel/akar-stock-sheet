@@ -69,7 +69,6 @@ const appendToSheet = async (Qdata) => {
       insertDataOption: "INSERT_ROWS",
       requestBody: { values: [row] },
     });
-    console.log("Quotation data added to sheet.");
   } catch (err) {
     console.error("Error adding to Google Sheet:", err);
   }
@@ -147,9 +146,9 @@ const generatePDF = async (req, res) => {
     const fileId = await uploadToDrive(pdfBuffer, `${Qdata.name}_${randomId}.pdf`, QUOTATION_FOLDER_ID);
     const publicUrl = await makeFilePublic(fileId);
     Qdata.fileUrl = publicUrl;
-
-    await appendToSheet(Qdata);
     const whatsAppUrl = sendWhatsapp(Qdata);
+    Qdata.waUrl = whatsAppUrl;
+    await appendToSheet(Qdata);
 
     res.status(200).send({ whatsAppUrl, publicUrl });
   } catch (error) {
