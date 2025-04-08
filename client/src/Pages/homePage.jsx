@@ -38,10 +38,10 @@ const homePage = (req, res) => {
         {/* The last button placed just below the other three buttons on large screens */}
         <div className="mt-6 lg:mt-8 flex justify-center
          align-center lg:block hidden">
-          <Link to='/quotation'>
+          <Link to='/all-quotation'>
             <button
               type="button"
-              className="w-full py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-purple-500 text-white hover:bg-purple-600 transition ease-in-out duration-300"
+              className="w-full py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-slate-600 text-white hover:bg-slate-500 transition ease-in-out duration-300"
             >
               All Quotation
             </button>
@@ -56,7 +56,7 @@ const homePage = (req, res) => {
         <Link to='/all-quotation'>
           <button
             type="button"
-            className="w-xs py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-yellow-500 text-white hover:bg-purple-600 transition ease-in-out duration-300"
+            className="w-xs py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-slate-600 text-white hover:bg-slate-500 transition ease-in-out duration-300"
           >
             All Quotation
           </button>
