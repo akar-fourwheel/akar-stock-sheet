@@ -80,7 +80,7 @@ const dataBasedOnYearModelAndFuel = (e) => {
   setGetVariant([]);
 
   axios
-    .get(`${import.meta.env.VITE_SERVER}/scheme-data`, {
+    .get(`${import.meta.env.VITE_SERVER}scheme-data`, {
       params: {
         year: year,
         model: model,
