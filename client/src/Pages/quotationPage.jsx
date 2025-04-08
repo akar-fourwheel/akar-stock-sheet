@@ -668,7 +668,7 @@ const quotationPage = () => {
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
                         {finalData[rto]}
                       </div>
-                    {(selectedDiscounts.some((opt) => opt.value === "EXCHANGE") && fuel == 'Electric') &&
+                    {(rto === "Scrap RTO") &&
                     <>
                       <div>Scrap by: </div>
                       <Select
