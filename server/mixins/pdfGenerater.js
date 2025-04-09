@@ -149,7 +149,6 @@ const generatePDF = async (req, res) => {
     const whatsAppUrl = sendWhatsapp(Qdata);
     Qdata.waUrl = whatsAppUrl;
     await appendToSheet(Qdata);
-    console.log(Qdata.waUrl);
     
 
     res.status(200).send({ whatsAppUrl, publicUrl });
