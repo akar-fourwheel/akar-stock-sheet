@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer from "@cloudflare/puppeteer";
 import path from "path";
 import { fileURLToPath } from "url";
 import { serviceAccountAuth } from "./googleSecurityHeader.js";
