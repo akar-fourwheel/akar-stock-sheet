@@ -204,8 +204,9 @@ const quotationPage = () => {
 
   useEffect(() => {
     const newTotal = selectedDiscounts.reduce((accumulator, item) => {
-      return accumulator + (finalData[item.value] || 0) + addExc + loyalty + (finalData[corpOffer] || 0);
-    }, 0) + Number(addDisc) + Number(sss);
+      if (item.value === "CORPORATE OFFER") return accumulator;
+      return accumulator + (finalData[item.value] || 0);
+    }, 0) + addExc + loyalty + (finalData[corpOffer] || 0) + Number(addDisc) + Number(sss);
 
     setTotalDisc(newTotal);
   }, [selectedDiscounts, addExc, loyalty, corpOffer, addDisc, sss]);
@@ -234,7 +235,7 @@ const quotationPage = () => {
     setSelectedDiscounts(selected);
     
     if (!selected.some((opt) => opt.value === "EXCHANGE")) {setLoyalty(0); setAddExc(0);}
-    if (!selected.some((opt) => opt.value === "CORPORATE OFFER")) {setCorpOffer(0);}
+    if (!selected.some((opt) => opt.value === "CORPORATE OFFER")) {setCorpOffer("");}
   };
 
   const handleAddExch = (selected) => {
