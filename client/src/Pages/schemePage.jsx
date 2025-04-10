@@ -195,18 +195,24 @@ useEffect(() => {
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[1] ? "Rs. " + finalData[1] : "Rs. 00"}</div>
             <div>EXCHANGE :</div>
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[2] ? "Rs. " + finalData[2] : "Rs. 00"}</div>
-            <div>INTERVENTION :</div>
+            <div>ADDITIONAL EXCHANGE :</div>
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[3] ? "Rs. " + finalData[3] : "Rs. 00"}</div>
-            <div>CORPORATE TOP 10 :</div>
+            <div>LOYALTY PV to EV:</div>
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[4] ? "Rs. " + finalData[4] : "Rs. 00"}</div>
-            <div>CORPORATE TOP 20 :</div>
+            <div>LOYALTY EV to EV:</div>
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[5] ? "Rs. " + finalData[5] : "Rs. 00"}</div>
-            <div>MSME :</div>
+            <div>INTERVENTION :</div>
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[6] ? "Rs. " + finalData[6] : "Rs. 00"}</div>
-            <div>SOLAR :</div>
+            <div>CORPORATE TOP 10 :</div>
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[7] ? "Rs. " + finalData[7] : "Rs. 00"}</div>
-            <div>GRID :</div>
+            <div>CORPORATE TOP 20 :</div>
             <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[8] ? "Rs. " + finalData[8] : "Rs. 00"}</div>
+            <div>MSME :</div>
+            <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[9] ? "Rs. " + finalData[9] : "Rs. 00"}</div>
+            <div>SOLAR :</div>
+            <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[10] ? "Rs. " + finalData[10] : "Rs. 00"}</div>
+            <div>GRID :</div>
+            <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[11] ? "Rs. " + finalData[11] : "Rs. 00"}</div>
           </div>
     </div>
   </div>
