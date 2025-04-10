@@ -1,9 +1,9 @@
 function DealerContent({responseData}){
     return (
     <div className="overflow-x-auto mt-6">
-    <table className="max-w-full table-auto border-collapse">
+    <table className="min-w-full table-auto border-collapse">
       <thead>
-        <tr className="bg-sky-400">
+        <tr className="bg-blue-500">
           {/* <th className="border border-solid p-2 text-white">YEAR</th>
           <th className="border border-solid p-2 text-white">MODEL</th>
           <th className="border border-solid p-2 text-white">FUEL</th> */}
@@ -23,7 +23,7 @@ function DealerContent({responseData}){
               </td>
             ))}
             <td className="border border-solid p-2">
-              <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+              <button className="w-full px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600">
                 Book
               </button>
             </td>
