@@ -749,6 +749,10 @@
             widows: 2;
             text-align: left
         }
+
+        .totals{
+            background-color: rgb(163, 163, 163);
+        }
     </style>
 </head>
 
@@ -924,12 +928,12 @@
                 <p class="c2"><span class="c3 c14">PRICE DETAILS</span></p>
             </td>
         </tr>
-        <tr class="c5">
+        <tr class="c5 totals">
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">Ex-Showroom</span></p>
+                <p class="c2"><span class="c0 c14">Ex-Showroom</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.ESP}}</span></p>
+                <p class="c16"><span class="c0 c14">{{Qdata.ESP}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1043,12 +1047,20 @@
             </td>
         </tr>
         {{/ifCond}}
-        <tr class="c5">
+        <tr class="c5 totals">
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">Billing Price</span></p>
+                <p class="c2"><span class="c0 c14 ">Billing Price</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.billingPrice}}</span></p>
+                <p class="c16"><span class="c0 c14">{{Qdata.billingPrice}}</span></p>
+            </td>
+        </tr>
+        <tr class="c5" style="height: 20px;">
+            <td class="c10" colspan="1" rowspan="1">
+                <p class="c2"><span class="c0">   </span></p>
+            </td>
+            <td class="c18" colspan="3" rowspan="1">
+                <p class="c16"><span class="c0">  </span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1106,7 +1118,7 @@
         </tr>
         <tr class="c5">
             <td class="c30" colspan="2" rowspan="1">
-                <p class="c16"><span class="c0 c14">Accessories:</span></p>
+                <p class="c16"><span class="c0 c14">Accessories</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0 c14">Insurance</span></p>
@@ -1129,11 +1141,8 @@
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0">{{Qdata.mudflap}}</span></p>
             </td>
-            <td class="c10" colspan="1" rowspan="1">
+            <td class="c10" colspan="2" rowspan="1">
                 <p class="c2"><span class="c0">Insurance Ad-Ons</span></p>
-            </td>
-            <td class="c10" colspan="1" rowspan="1">
-                <p class="c2 c4"><span class="c0"></span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1374,11 +1383,11 @@
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0">{{Qdata.trunkMat}}</span></p>
             </td>
-            <td class="c10" colspan="1" rowspan="1">
+            <td class="c10 totals" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0 c14">Total Insurance</span></p>
             </td>
-            <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.incTotal}}</span></p>
+            <td class="c10 totals" colspan="1" rowspan="1">
+                <p class="c2"><span class="c0 c14">{{Qdata.incTotal}}</span></p>
             </td>
         </tr>
         <tr class="c23">
@@ -1421,11 +1430,11 @@
             </td>
         </tr>
         <tr class="c5">
-            <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">Accessories Amount</span></p>
+            <td class="c10 totals" colspan="1" rowspan="1">
+                <p class="c2"><span class="c0 c14">Accessories Amount</span></p>
             </td>
-            <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.accTotal}}</span></p>
+            <td class="c10 totals" colspan="1" rowspan="1">
+                <p class="c2"><span class="c0 c14">{{Qdata.accTotal}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0">{{Qdata.vasType}}</span></p>
@@ -1448,7 +1457,7 @@
                 <p class="c2 c4"><span class="c0"></span></p>
             </td>
         </tr>
-        <tr class="c5">
+        <tr class="c5 totals">
             <td class="c30" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0 c14">Final Deal Amount In Numbers :</span></p>
             </td>
