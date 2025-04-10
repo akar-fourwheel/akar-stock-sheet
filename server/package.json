@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config=Scripts/config/webpack.prod.js"
+    "build": "webpack --config=Scripts/config/webpack.prod.js",
+    "postinstall": "puppeteer install"
   },
   "author": "jaidev",
   "license": "ISC",
@@ -19,6 +20,10 @@
     "google-spreadsheet": "^4.1.4",
     "googleapis": "^148.0.0",
     "nodemon": "^3.1.9",
-    "pdf-creator-node": "^2.3.5"
+    "pdf-creator-node": "^2.3.5",
+    "puppeteer": "^24.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/puppeteer": "^1.0.1"
   }
 }

@@ -1,7 +1,8 @@
 import { Link } from "react-router";
 
 const homePage = (req, res) => {
-  return (
+ return (
+  <>
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center p-6">
       <div className="bg-white p-8 rounded-lg shadow-xl max-w-4xl w-full">
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
@@ -33,9 +34,38 @@ const homePage = (req, res) => {
             </button>
           </Link>
         </div>
+
+        {/* The last button placed just below the other three buttons on large screens */}
+        <div className="mt-6 lg:mt-8 flex justify-center
+         align-center lg:block hidden">
+          <Link to='/all-quotation'>
+            <button
+              type="button"
+              className="w-full py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-slate-600 text-white hover:bg-slate-500 transition ease-in-out duration-300"
+            >
+              All Quotation
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
-  );
+
+    {/* On smaller screens, make it fixed at the bottom */}
+    <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg">
+      <div className="flex justify-center">
+        <Link to='/all-quotation'>
+          <button
+            type="button"
+            className="w-xs py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-slate-600 text-white hover:bg-slate-500 transition ease-in-out duration-300"
+          >
+            All Quotation
+          </button>
+        </Link>
+      </div>
+    </div>
+  </>
+);
+
 }
 
 export default homePage;

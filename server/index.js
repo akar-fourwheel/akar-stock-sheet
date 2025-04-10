@@ -10,6 +10,7 @@ import stockSheetRoute from './Routes/stockSheets.js';
 import schemeSheetRoute from './Routes/schemeSheet.js';
 import quotationRoute from './Routes/quotationRoute.js';
 import pdfRoute from './Routes/pdfRoute.js';
+import allQuotationRoute from './Routes/allQuotationsRoute.js';
 
 const app = express();
 const PORT = 8080;
@@ -21,8 +22,9 @@ app.use(stockSheetRoute);
 app.use(schemeSheetRoute);
 app.use(quotationRoute);
 app.use(pdfRoute);
+app.use(allQuotationRoute);
 
 
 app.listen(process.env.PORT || PORT, () => {
-    console.log(`Server is listening at http://localhost:${PORT}`);
+    console.log(`Server is live!`);
 });

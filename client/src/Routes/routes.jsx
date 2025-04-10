@@ -4,6 +4,7 @@ import App from '../App';
 import StockPage from '../Pages/stockPage';
 import SchemePage from '../Pages/schemePage';
 import QuotationPage from '../Pages/quotationPage'
+import AllQuotation from "../Pages/AllQuotation";
 
 export const routes = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ export const routes = createBrowserRouter([
     {
         path:'/quotation',
         Component:QuotationPage
+    },
+    {
+        path:'/all-quotation',
+        Component:AllQuotation
     }
 ])
 
