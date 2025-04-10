@@ -624,6 +624,8 @@ const quotationPage = () => {
                       placeholder='Optional'
                       onChange={handleColor}
                       className="w-full p-1 rounded-lg"
+                      isSearchable={false}
+                      classNamePrefix="react-select"
                       />
                       </>}
                     <div>Select Discount Type:</div>
