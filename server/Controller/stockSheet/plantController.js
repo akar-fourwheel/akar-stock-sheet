@@ -1,6 +1,6 @@
 import googleSecurityHeader from '../../mixins/googleSecurityHeader.js'
 
-const SHEET_ID = '1eKs7_vXp1bqlc2fUjpppYDXfB9YRENM_';  
+const SHEET_ID = process.env.SHEET_ID; 
 
 const plantFormData = async (req, res) => {
 
@@ -17,7 +17,7 @@ const plantFormData = async (req, res) => {
       }
   
   const token = await googleSecurityHeader();
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq=${query}&access_token=${token}`;
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=PlantStock&tq=${query}&access_token=${token}`;
   
   try{
       const resu = await fetch(url);
