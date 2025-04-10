@@ -5,6 +5,9 @@ const homePage = (req, res) => {
   <>
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center p-6">
       <div className="bg-white p-8 rounded-lg shadow-xl max-w-4xl w-full">
+        <div>
+          <img src="./logo.jpg" alt="" className="h-50 m-auto" />
+        </div>
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
           Akar Home Page
         </h1>
