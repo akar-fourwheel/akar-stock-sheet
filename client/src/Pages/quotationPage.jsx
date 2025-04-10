@@ -267,11 +267,13 @@ const quotationPage = () => {
   }
 
   const handleAddDisc = (e) => {
-    setAddDisc(e.target.value)
+    const trimmed = e.target.value.replace(/^0+(?!$)/, '');
+    setAddDisc(trimmed);
   }
 
   const handleSss = (e) => {
-    setSss(e.target.value)
+    const trimmed = e.target.value.replace(/^0+(?!$)/, '');
+    setSss(trimmed);
   }
 
   const handleRto = (selected) => {
@@ -480,6 +482,7 @@ const quotationPage = () => {
         <input
           type="text"
           onChange={(e) => setEmail(e.target.value)}
+          placeholder='Optional'
           className={`w-full p-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
         />
       </div>
@@ -618,6 +621,7 @@ const quotationPage = () => {
                       <Select
                       options={color}
                       isClearable
+                      placeholder='Optional'
                       onChange={handleColor}
                       className="w-full p-1 rounded-lg"
                       />
@@ -690,6 +694,8 @@ const quotationPage = () => {
                       onChange={handleRto}
                       defaultValue={{ value: 'RTO', label: 'Normal RTO' }}
                       className="w-full p-1 rounded-lg"
+                      classNamePrefix="react-select"
+                      isSearchable={false}
                     />
                     <div>RTO Amount: </div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
