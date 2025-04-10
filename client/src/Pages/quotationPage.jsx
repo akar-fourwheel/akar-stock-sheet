@@ -490,6 +490,7 @@ const quotationPage = () => {
           value={selectedSalesPerson}
           onChange={(e) => setSelectedSalesPerson(e.target.value)}
           className={`w-full p-2 border ${errors.selectedSalesPerson ? 'border-red-500' : 'border-gray-300'} rounded-lg`}
+          isSearchable={true}
         >
           <option value="">Select a Sales Person</option>
           {salesPersonList.map((salesPerson, index) => (
@@ -577,7 +578,7 @@ const quotationPage = () => {
   
 
   <div className="overflow-x-auto mt-6">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 overflow-y-hidden">
           {Object.keys(finalData).map((key, i) => (
             <Fragment key={i}>
               {(i >= 20 && i<= 26) ?
@@ -592,6 +593,11 @@ const quotationPage = () => {
                       value={selectedInsurance}
                       onChange={handleInsurance}
                       className="w-full p-1 rounded-lg"
+                      isSearchable={false}
+                      closeMenuOnSelect={false}
+                      menuIsOpen={undefined}
+                      maxMenuHeight={200}
+                      classNamePrefix="react-select"
                     />
                       <div>Insurance Total:</div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
@@ -623,6 +629,11 @@ const quotationPage = () => {
                       value={selectedDiscounts}
                       onChange={handleDiscount}
                       className="w-full p-1 rounded-lg"
+                      isSearchable={false}
+                      closeMenuOnSelect={false}
+                      menuIsOpen={undefined}
+                      maxMenuHeight={200}
+                      classNamePrefix="react-select"
                     />
                     {(selectedDiscounts.some((opt) => opt.value === "EXCHANGE") && fuel == 'Electric') &&
                   <>
@@ -706,6 +717,7 @@ const quotationPage = () => {
                       options={ewOptions.filter(x => finalData[x.value] > 0)}
                       onChange={handleEw}
                       className="w-full p-1 rounded-lg"
+                      isSearchable={false}
                     />
                     <div>EW Amount: </div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
@@ -717,6 +729,11 @@ const quotationPage = () => {
                       isMulti
                       onChange={handleAccessories}
                       className="w-full p-1 rounded-lg"
+                      isSearchable={false}
+                      closeMenuOnSelect={false}
+                      menuIsOpen={undefined}
+                      maxMenuHeight={200}
+                      classNamePrefix="react-select"
                     />
                     <div>Accessories Amount: </div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
@@ -724,6 +741,7 @@ const quotationPage = () => {
                       </div>
                       <div>VAS Type: </div>
                       <Select
+                      isSearchable={false}
                       isClearable
                       options={vasOptions}
                       onChange={handleVas}
@@ -735,10 +753,12 @@ const quotationPage = () => {
                       </div>
                       <div>HPN: </div>
                       <Select
+                      isSearchable={false}
                       options={hpnOptions}
                       onChange={handleHpn}
                       value={selectedHpn}
                       className="w-full p-1 rounded-lg"
+                      classNamePrefix="react-select"
                     />
                   </> :
                 <>
