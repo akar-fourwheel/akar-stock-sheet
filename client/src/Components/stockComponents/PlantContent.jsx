@@ -1,5 +1,38 @@
+import { useEffect, useState } from "react";
+
 function PlantContent({responseData}){
+    const [selectedVariant, setSelectedVariant] = useState('');
+    const [filteredData, setFilteredData] = useState(responseData);
+  
+    const variants = Array.from(new Set(responseData.map(row => row[0])));
+      useEffect(() => {
+        if (selectedVariant === '') {
+          setFilteredData(responseData);
+        } else {
+          setFilteredData(responseData.filter(row => row[0] === selectedVariant));
+        }
+      }, [selectedVariant, responseData]);
+
     return (
+      <>
+      <div className="mt-4 px-4 flex flex-col md:flex-row items-start md:items-center gap-2">
+      <label htmlFor="variant-select" className="font-semibold text-sm text-gray-700">
+        Filter by Variant:
+      </label>
+      <select
+        id="variant-select"
+        className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+        value={selectedVariant}
+        onChange={(e) => setSelectedVariant(e.target.value)}
+      >
+        <option value="">All Variants</option>
+        {variants.map((variant, index) => (
+          <option key={index} value={variant}>
+            {variant}
+          </option>
+        ))}
+      </select>
+    </div>
     <div className="overflow-x-auto mt-6">
     <table className="min-w-full table-auto border-collapse">
       <thead>
@@ -14,7 +47,7 @@ function PlantContent({responseData}){
         </tr>
       </thead>
       <tbody>
-        {responseData.map((row, rowIndex) => (
+        {filteredData.map((row, rowIndex) => (
           <tr key={rowIndex} className="hover:bg-gray-100 text-[14px] md:text-lg">
             {row.map((cell, cellIndex) => (
               <td key={cellIndex} className="border border-solid p-2">
@@ -31,6 +64,7 @@ function PlantContent({responseData}){
       </tbody>
     </table>
   </div>
+  </>
     )
 }
 
