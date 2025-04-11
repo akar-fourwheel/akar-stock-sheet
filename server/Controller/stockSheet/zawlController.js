@@ -1,6 +1,6 @@
 import googleleSecurityHeader from '../../mixins/googleSecurityHeader.js';
 
-const SHEET_ID = '1iwW8sns6tbofsfjd13DOeNrO8aKpJZIz';
+const SHEET_ID = process.env.SHEET_ID;
 
 const zawlFormData = async (req, res) => {
 
@@ -19,7 +19,7 @@ const zawlFormData = async (req, res) => {
   
   
     const token = await googleleSecurityHeader();
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq=${query}&access_token=${token}`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=ZAWL&tq=${query}&access_token=${token}`;
     
   try{
       const resu = await fetch(url);

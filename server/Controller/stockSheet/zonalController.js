@@ -1,6 +1,6 @@
 import googleSecurityHeader from '../../mixins/googleSecurityHeader.js'
 
-const SHEET_ID = '1FvTw2uAgYmroZKugMuAlvC5fz3v6YfQy';
+const SHEET_ID = process.env.SHEET_ID;
 
 const zonalFormData = async (req, res) => {
 
@@ -14,7 +14,7 @@ const zonalFormData = async (req, res) => {
     }
   
     const token = await googleSecurityHeader();
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq=${query}&access_token=${token}`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=ZonalStock&tq=${query}&access_token=${token}`;
    
   try{
       const resu = await fetch(url);
