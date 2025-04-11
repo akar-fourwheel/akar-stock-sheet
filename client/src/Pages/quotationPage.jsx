@@ -42,7 +42,6 @@ const quotationPage = () => {
   const [address,setAddress] = useState('');
   const [currentDate, setCurrentDate] = useState("");
   const [selectedSalesPerson, setSelectedSalesPerson] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
   const [pdfUrl,setPdfUrl] = useState('');
   const [whatsAppUrl,setWhatsAppUrl] = useState('');
   const [errors, setErrors] = useState({
@@ -293,8 +292,7 @@ const quotationPage = () => {
   }
 
   const handleVas = (selected) => {
-    selected ? setSelectedVas(selected) : setSelectedVas("N/A")
-    
+    selected ? setSelectedVas(selected) : setSelectedVas()
   }
 
   const handleHpn = (selected) => {
