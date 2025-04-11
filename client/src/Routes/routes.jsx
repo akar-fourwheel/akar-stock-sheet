@@ -24,7 +24,7 @@ export const routes = createBrowserRouter([
         Component:QuotationPage
     },
     {
-        path:'/all-quotation',
+        path:'/545d65n85g',
         Component:AllQuotation
     }
 ])
