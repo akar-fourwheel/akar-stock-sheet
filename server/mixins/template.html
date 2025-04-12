@@ -871,7 +871,7 @@
         </tr>
         <tr class="c5">
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">Sales Person</span></p>
+                <p class="c2"><span class="c0">Sales Executive</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
                 <p class="c2"><span class="c0">{{Qdata.salesPerson}} </span></p>
@@ -933,7 +933,7 @@
                 <p class="c2"><span class="c0 c14">Ex-Showroom</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0 c14">{{Qdata.ESP}}</span></p>
+                <p class="c16"><span class="c0 c14">₹ {{Qdata.ESP}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -946,7 +946,7 @@
                 <p class="c2"><span class="c0">Consumer</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.consumerDisc}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.consumerDisc}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -954,7 +954,7 @@
                 <p class="c2"><span class="c0">Intervention</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.interventionDisc}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.interventionDisc}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -962,7 +962,7 @@
                 <p class="c2"><span class="c0">Exchange Scrap</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.exchangeScrap}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.exchangeScrap}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -970,7 +970,7 @@
                 <p class="c2"><span class="c0">Additional Exchange</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.addExcDisc}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.addExcDisc}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -978,7 +978,7 @@
                 <p class="c2"><span class="c0">CORPORATE TOP 10</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.corpTop10Disc}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.corpTop10Disc}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -986,7 +986,7 @@
                 <p class="c2"><span class="c0">CORPORATE TOP 20</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.corpTop20Disc}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.corpTop20Disc}}</span></p>
             </td>
         </tr>
         {{#ifCond Qdata.corpOfferToggle "===" true}}
@@ -999,8 +999,8 @@
             </td>
             <td class="c18" colspan="3" rowspan="1">
                 <p class="c16"><span class="c0">
-                    {{#ifCond Qdata.MSMEDisc "!=" 0}} {{Qdata.MSMEDisc}} {{/ifCond}}
-                    {{#ifCond Qdata.solarDisc "!=" 0}} {{Qdata.solarDisc}} {{/ifCond}}
+                    {{#ifCond Qdata.MSMEDisc "!=" 0}}₹ {{Qdata.MSMEDisc}} {{/ifCond}}
+                    {{#ifCond Qdata.solarDisc "!=" 0}}₹ {{Qdata.solarDisc}} {{/ifCond}}
                 </span></p>
             </td>
         </tr>
@@ -1010,7 +1010,7 @@
                 <p class="c2"><span class="c0">GRID</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.gridDisc}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.gridDisc}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1018,7 +1018,7 @@
                 <p class="c2"><span class="c0">Additional Discount</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.addDisc}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.addDisc}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1026,7 +1026,7 @@
                 <p class="c2"><span class="c0">SSS</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.SSS}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.SSS}}</span></p>
             </td>
         </tr>
         {{#ifCond Qdata.loyalty "===" true}}
@@ -1040,8 +1040,8 @@
             </td>
             <td class="c18" colspan="3" rowspan="1">
                 <p class="c16"><span class="c0">
-                    {{#ifCond Qdata.ICEtoEV "!=" '0'}} {{Qdata.ICEtoEV}} {{/ifCond}}
-                    {{#ifCond Qdata.EVtoEV "!=" '0'}} {{Qdata.EVtoEV}} {{/ifCond}}
+                    {{#ifCond Qdata.ICEtoEV "!=" '0'}} ₹ {{Qdata.ICEtoEV}} {{/ifCond}}
+                    {{#ifCond Qdata.EVtoEV "!=" '0'}} ₹ {{Qdata.EVtoEV}} {{/ifCond}}
                 </span>
                 </p>
             </td>
@@ -1052,7 +1052,7 @@
                 <p class="c2"><span class="c0 c14 ">Billing Price</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0 c14">{{Qdata.billingPrice}}</span></p>
+                <p class="c16"><span class="c0 c14">₹ {{Qdata.billingPrice}}</span></p>
             </td>
         </tr>
         <tr class="c5" style="height: 20px;">
@@ -1068,7 +1068,7 @@
                 <p class="c2"><span class="c0">TCS</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.tcs}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.tcs}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1076,7 +1076,7 @@
                 <p class="c2"><span class="c0">Fastag</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.fasttag}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.fasttag}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1084,7 +1084,7 @@
                 <p class="c2"><span class="c0">COD</span></p>
             </td>
             <td class="c18" colspan="3" rowspan="1">
-                <p class="c16"><span class="c0">{{Qdata.cod}}</span></p>
+                <p class="c16"><span class="c0">₹ {{Qdata.cod}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1108,7 +1108,7 @@
                 <p class="c2"><span class="c0">RTO Amount</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.rtoAmt}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.rtoAmt}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1124,7 +1124,7 @@
                 <p class="c2"><span class="c0 c14">Insurance</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.inc}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.inc}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1139,7 +1139,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.mudflap}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.mudflap}}</span></p>
             </td>
             <td class="c10" colspan="2" rowspan="1">
                 <p class="c2"><span class="c0">Insurance Ad-Ons</span></p>
@@ -1157,7 +1157,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.uniMatting}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.uniMatting}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
@@ -1170,7 +1170,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.rsa}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.rsa}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1185,7 +1185,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.seatCover}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.seatCover}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
@@ -1198,7 +1198,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.keyRep}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.keyRep}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1213,7 +1213,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.doorVisor}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.doorVisor}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
@@ -1226,7 +1226,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.engineProtect}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.engineProtect}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1241,7 +1241,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.doorEdge}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.doorEdge}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
@@ -1254,7 +1254,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.rti}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.rti}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1269,7 +1269,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.bsm}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.bsm}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
@@ -1282,7 +1282,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.tyreNcover}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.tyreNcover}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1297,20 +1297,20 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.scuffPlate}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.scuffPlate}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
                     <span class="c0 c20">
-                    {{#ifCond Qdata.consumables "==" '0'}} consumables {{/ifCond}}
+                    {{#ifCond Qdata.consumables "==" '0'}} Consumables {{/ifCond}}
                     </span>
                     <span class="c0">
-                    {{#ifCond Qdata.consumables "!=" '0'}} consumables {{/ifCond}}
+                    {{#ifCond Qdata.consumables "!=" '0'}} Consumables {{/ifCond}}
                     </span>
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.consumables}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.consumables}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1325,7 +1325,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.sideStep}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.sideStep}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
@@ -1338,22 +1338,22 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.personalBelong}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.personalBelong}}</span></p>
             </td>
         </tr>
         <tr class="c5">
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
                     <span class="c0 c20">
-                    {{#ifCond Qdata.mat7D "==" '0'}} 7 D mat {{/ifCond}}
+                    {{#ifCond Qdata.mat7D "==" '0'}} 7D Mat {{/ifCond}}
                     </span>
                     <span class="c0">
-                    {{#ifCond Qdata.mat7D "!=" '0'}} 7 D mat {{/ifCond}}
+                    {{#ifCond Qdata.mat7D "!=" '0'}} 7D Mat {{/ifCond}}
                     </span>
                 </p>
             </td7>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.mat7D}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.mat7D}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2">
@@ -1366,7 +1366,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.batteryP}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.batteryP}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1381,13 +1381,13 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.trunkMat}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.trunkMat}}</span></p>
             </td>
             <td class="c10 totals" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0 c14">Total Insurance</span></p>
             </td>
             <td class="c10 totals" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0 c14">{{Qdata.incTotal}}</span></p>
+                <p class="c2"><span class="c0 c14">₹ {{Qdata.incTotal}}</span></p>
             </td>
         </tr>
         <tr class="c23">
@@ -1402,7 +1402,7 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.perfume}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.perfume}}</span></p>
             </td>
             <td class="c29" colspan="4" rowspan="1">
                 <p class="c16"><span class="c0 c14">VAS</span></p>
@@ -1420,13 +1420,13 @@
                 </p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.ganeshji}}</span></p>
+                <p class="c2"><span class="c0">₹ {{Qdata.ganeshji}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0">{{Qdata.ewType}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.ew}}</span></p>
+                <p class="c2"><span class="c0">{{#ifCond Qdata.ew "==" ' '}} {{/ifCond}} {{#ifCond Qdata.ew "!=" ' '}}₹ {{Qdata.ew}} {{/ifCond}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1434,13 +1434,13 @@
                 <p class="c2"><span class="c0 c14">Accessories Amount</span></p>
             </td>
             <td class="c10 totals" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0 c14">{{Qdata.accTotal}}</span></p>
+                <p class="c2"><span class="c0 c14">₹ {{Qdata.accTotal}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
                 <p class="c2"><span class="c0">{{Qdata.vasType}}</span></p>
             </td>
             <td class="c10" colspan="1" rowspan="1">
-                <p class="c2"><span class="c0">{{Qdata.vas}}</span></p>
+                <p class="c2"><span class="c0">{{#ifCond Qdata.vas "==" ' '}} {{/ifCond}} {{#ifCond Qdata.vas "!=" ' '}}₹ {{Qdata.vas}} {{/ifCond}}</span></p>
             </td>
         </tr>
         <tr class="c5">
@@ -1462,7 +1462,7 @@
                 <p class="c2"><span class="c0 c14">Final Deal Amount In Numbers :</span></p>
             </td>
             <td class="c10" colspan="4" rowspan="1">
-                <p class="c2"><span class="c0 c14">{{Qdata.grandTotal}}</span></p>
+                <p class="c2"><span class="c0 c14">₹ {{Qdata.grandTotal}}</span></p>
             </td>
         </tr>
         <tr class="c5">

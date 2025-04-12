@@ -38,8 +38,7 @@ const homePage = (req, res) => {
           </Link>
         </div>
 
-        {/* The last button placed just below the other three buttons on large screens */}
-        <div className="mt-6 lg:mt-8 flex justify-center
+        {/* <div className="mt-6 lg:mt-8 flex justify-center
          align-center lg:block hidden">
           <Link to='/all-quotation'>
             <button
@@ -49,12 +48,11 @@ const homePage = (req, res) => {
               All Quotation
             </button>
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
 
-    {/* On smaller screens, make it fixed at the bottom */}
-    <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg">
+    {/* <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg">
       <div className="flex justify-center">
         <Link to='/all-quotation'>
           <button
@@ -65,7 +63,7 @@ const homePage = (req, res) => {
           </button>
         </Link>
       </div>
-    </div>
+    </div> */}
   </>
 );
 

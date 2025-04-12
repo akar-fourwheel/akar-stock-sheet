@@ -1,5 +1,5 @@
 import googleSecurityHeader from "../../mixins/googleSecurityHeader.js";
-const SHEET_ID = '15V2kDmWh7HQeghHxW5_u0Tte_-yETeJb';
+const SHEET_ID = process.env.SHEET_ID;
 
 const dealerFormData = async (req, res) => {
 
@@ -12,7 +12,7 @@ const dealerFormData = async (req, res) => {
     }
   
   const token = await googleSecurityHeader();
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq=${query}&access_token=${token}`;
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=DealerStock&tq=${query}&access_token=${token}`;
   
   try{
       const resu = await fetch(url);
