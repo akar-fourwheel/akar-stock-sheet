@@ -17,7 +17,7 @@ const BookingPage = () => {
       })
       .then((res) => {
         setResData(res.data);        
-        setColor(res.data.color); // make color editable
+        setColor(res.data[3]);
       });
   }, []);
 
@@ -26,12 +26,15 @@ const BookingPage = () => {
 
   const handleBooking = () => {
     try {
+      console.log(color);
+      
       axios.post(`${import.meta.env.VITE_SERVER}booking-process`, {
-        quoteID,
-        year:resData[1],
-        bookingAmount,
+        quoteID: quoteID,
+        year: resData[1],
+        bookingAmount: bookingAmount,
         RemainingAmount: RemainingAmt,
-        color,
+        color: color,
+        variant: resData[2]
       })
       .then(response =>{
         console.log( response.data?.chassisNo);
@@ -41,7 +44,7 @@ const BookingPage = () => {
         if (chassisNo) {
           navigate(`/booking-success/${chassisNo}`);
         } else {
-          alert("Booking complete, but no phone number returned.");
+          alert("Booking complete, but no Chassis number returned.");
         }
       })
 
