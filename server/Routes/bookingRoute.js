@@ -7,7 +7,7 @@ import bookingProcessController from '../Controller/booking/bookingProcessContro
 const bookingRoute = express.Router();
 
 bookingRoute.get('/booking-page', bookingPageController);
-bookingRoute.get('/booking-process', bookingProcessController);
+bookingRoute.post('/booking-process', bookingProcessController);
 bookingRoute.get('/booking-check-cars', bookingOptionsController);
 
 export default bookingRoute;

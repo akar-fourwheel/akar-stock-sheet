@@ -4,7 +4,6 @@ import { useParams } from "react-router";
 
 const BookingPage = () => {
   const quoteID = useParams().id;
-  console.log(quoteID);
 
   const [bookingAmount, setBookingAmount] = useState(0);
   const [resData, setResData] = useState({});
@@ -17,33 +16,35 @@ const BookingPage = () => {
         params: { quoteID },
       })
       .then((res) => {
-        setResData(res.data);
-        console.log(res.data);
-        
+        setResData(res.data);        
         setColor(res.data.color); // make color editable
       });
   }, []);
 
-  const finalAmt = parseFloat(resData.finalAmt) || 0;
+  const finalAmt = parseFloat(resData[5]) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
 
-  const handleBooking = async () => {
+  const handleBooking = () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER}booking-process`, {
+      axios.post(`${import.meta.env.VITE_SERVER}booking-process`, {
         quoteID,
+        year:resData[1],
         bookingAmount,
         RemainingAmount: RemainingAmt,
         color,
-      });
+      })
+      .then(response =>{
+        console.log( response.data?.chassisNo);
+        const chassisNo = response.data?.chassisNo;
+        console.log(response.data);
+        
+        if (chassisNo) {
+          navigate(`/booking-success/${chassisNo}`);
+        } else {
+          alert("Booking complete, but no phone number returned.");
+        }
+      })
 
-      console.log( response.data);
-
-      const chassisNo = response.data?.chassisNo;
-      if (chassisNo) {
-        navigate(`/booking-success/${chassisNo}`);
-      } else {
-        alert("Booking complete, but no phone number returned.");
-      }
     } catch (e) {
       console.error("Booking error", e);
     }
@@ -83,7 +84,7 @@ const BookingPage = () => {
         className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"
         onClick={handleBooking}
       >
-        Submit
+        Book Car
       </button>
     </div>
   );

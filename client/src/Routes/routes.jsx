@@ -6,7 +6,7 @@ import SchemePage from '../Pages/schemePage';
 import QuotationPage from '../Pages/quotationPage'
 import AllQuotation from "../Pages/AllQuotation";
 import QuotationForBooking from '../Pages/quotationForBooking'
-import BookingPage from "../Pages/BookingPage";
+import BookingPage from "../Pages/booking/BookingPage";
 
 export const routes = createBrowserRouter([
     {
@@ -31,6 +31,10 @@ export const routes = createBrowserRouter([
     },
     {
         path:'/booking-page/:id',
+        Component:BookingPage
+    },
+    {
+        path:'/booking-success/:chassis',
         Component:BookingPage
     },
     {
