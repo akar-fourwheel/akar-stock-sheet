@@ -24,6 +24,7 @@ const bookingProcessController = async(req,res) => {
           range: "DealerStock",
         });
       
+      
         const rows = getRes.data.values || [];
       
         // Skip header
@@ -33,8 +34,8 @@ const bookingProcessController = async(req,res) => {
       
           const matches =
             row[2] === year &&
-            upper(row[10]) === upper(variant) &&
-            upper(row[12]) === upper(color);
+            row[10].toUpperCase() === variant.toUpperCase() &&
+            row[12].toUpperCase() === color.toUpperCase();
       
           if (matches && !isNaN(age) && age > maxAge) {
             maxAge = age;
@@ -54,7 +55,6 @@ const bookingProcessController = async(req,res) => {
     try {
         // Get car data and row index to delete
         const { carToBook, rowIdx } = await status();
-        console.log(carToBook, rowIdx);
         
       
         // Delete the row from Dealer Stock
@@ -76,6 +76,8 @@ const bookingProcessController = async(req,res) => {
           },
         };
         await sheets.spreadsheets.batchUpdate(deleteRequest);
+
+        const finalRow = ["BI-"+quoteID, quoteID, ...carToBook, bookingAmount, RemainingAmount];        
       
         // Push car data to Booking Stock
         await sheets.spreadsheets.values.append({
@@ -84,18 +86,16 @@ const bookingProcessController = async(req,res) => {
           valueInputOption: "RAW",
           insertDataOption: "INSERT_ROWS",
           requestBody: {
-            values: [carToBook],
+            values: [finalRow],
           },
         });
-      
-        // Return car info (like model or variant)
-        console.log(carToBook[6]);
+        // Send car info (like model or variant)
         res.send({chassisNo : carToBook[6]});
       
       }
     catch(e){
-        console.log("No Matching Car Found!");
-        res.send("No Matching Car Found!");
+        console.log("Couldn't post!");
+        res.send("Couldn't post!");
     }
 }
 
