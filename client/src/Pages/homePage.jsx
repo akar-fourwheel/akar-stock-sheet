@@ -38,32 +38,32 @@ const homePage = (req, res) => {
           </Link>
         </div>
 
-        {/* <div className="mt-6 lg:mt-8 flex justify-center
+        <div className="mt-6 lg:mt-8 flex justify-center
          align-center lg:block hidden">
-          <Link to='/all-quotation'>
+          <Link to='/booking-list'>
             <button
               type="button"
               className="w-full py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-slate-600 text-white hover:bg-slate-500 transition ease-in-out duration-300"
             >
-              All Quotation
+              Booking List
             </button>
           </Link>
-        </div> */}
+        </div>
       </div>
     </div>
 
-    {/* <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg">
+    <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg">
       <div className="flex justify-center">
-        <Link to='/all-quotation'>
+        <Link to='/booking-list'>
           <button
             type="button"
             className="w-xs py-3 px-6 text-lg font-semibold rounded-lg border border-transparent bg-slate-600 text-white hover:bg-slate-500 transition ease-in-out duration-300"
           >
-            All Quotation
+            Booking List
           </button>
         </Link>
       </div>
-    </div> */}
+    </div>
   </>
 );
 

@@ -3,7 +3,7 @@ import googleSecurityHeader from '../../mixins/googleSecurityHeader.js';
 const SHEET_ID = '1H-O8RrC31_TWMJ-QxCBSO7UXXRFTYUQ9Uz8Rvpv2Nkc';
 
 const allQuotationController = async (req, res) => {    
-    const query = 'SELECT B, G, C, L, BN, BO'
+    const query = 'SELECT A ,B, G, C, L, BN, BO'
     const token = await googleSecurityHeader();
 
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=QuotationSheet&tq=${query}&access_token=${token}`;

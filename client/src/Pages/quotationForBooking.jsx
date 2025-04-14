@@ -31,39 +31,30 @@ function AllQuotation() {
 <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
   <thead>
     <tr className="bg-gray-100">
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Created_on</th>
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Unique_ID</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Booking_ID</th>
       <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Customer_Name</th>
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Sales_Person</th>
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Variant</th>
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">PDF</th>
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">WhatsApp</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Created_on</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Sales_Advicer</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Varient</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Booking</th>
     </tr>
   </thead>
   <tbody>
     {sortedQuotaData.map((row) => (
       <tr key={row} className="border-b hover:bg-gray-50">
-        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[1]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[0]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base font-medium text-gray-700">{row[2]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[1]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[3]}</td>
+        
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[4]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">
           <button
-            onClick={() => window.open(row[4], '_blank')}
+            
             className="px-4 py-2 bg-blue-500 sm:w-50 text-white rounded-lg hover:bg-blue-600"
             aria-label="Open PDF"
           >
-            Open
-          </button>
-        </td>
-        <td className="sm:px-4 sm:py-3 px-3 w-50 py-2 text-sm text-gray-700">
-          <button
-            onClick={() => window.location.href = row[5]}
-            className="px-4 py-2 bg-green-500 sm:w-50 text-white rounded-lg hover:bg-green-600"
-            aria-label="Send WhatsApp message"
-          >
-            WhatsApp
+            Book
           </button>
         </td>
       </tr>
