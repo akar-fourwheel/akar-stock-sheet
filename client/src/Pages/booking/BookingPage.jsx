@@ -8,19 +8,8 @@ const BookingPage = () => {
   const [bookingAmount, setBookingAmount] = useState(0);
   const [resData, setResData] = useState({});
   const [color, setColor] = useState("");
-
-  useEffect(() => {
-    if (!quoteID) return;
-    axios
-      .get(`${import.meta.env.VITE_SERVER}booking-page`, {
-        params: { quoteID },
-      })
-      .then((res) => {
-        setResData(res.data);        
-        setColor(res.data[3]);
-      });
-  }, []);
-
+  const [colorList,setColorList] = useState([]);
+  
   const finalAmt = parseFloat(resData[5]) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
 
@@ -53,6 +42,28 @@ const BookingPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (!quoteID) return;
+  
+    axios.get(`${import.meta.env.VITE_SERVER}booking-page`, {
+      params: { quoteID },
+    }).then((res) => {
+      setResData(res.data);
+      setColor(res.data[3]);
+  
+      if (!res.data[3] || res.data[3] === "N/A") {
+        axios.get(`${import.meta.env.VITE_SERVER}booking-color`, {
+          params: {
+            year: res.data[1],
+            variant: res.data[2],
+          },
+        }).then((res) => {
+          setColorList(res.data);
+        });
+      }
+    });
+  }, [quoteID]);
+
   return (
     <div className="overflow-x-auto mt-6">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -63,11 +74,29 @@ const BookingPage = () => {
         <div>Varient :</div>
         <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[2]}</div>
         <div>Color :</div>
-        <input
-          className="w-full p-2 border border-gray-300 rounded-lg"
-          defaultValue={resData[3]}
-          onChange={(e) => setColor(e.target.value)}
-        />
+{color && color !== "N/A" ? (
+  <select
+    className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
+    value={color}
+    disabled
+  >
+    <option value={color}>{color}</option>
+  </select>
+) : (
+  <select
+    className="w-full p-2 border border-gray-300 rounded-lg"
+    value={color}
+    onChange={(e) => setColor(e.target.value)}
+  >
+    <option value="">Select a color</option>
+    {colorList.map((clr, index) => (
+      <option key={index} value={clr}>
+        {clr}
+      </option>
+    ))}
+  </select>
+)}
+
         <div>Total Discount :</div>
         <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[4]}</div>
         <div>Final Amount :</div>
