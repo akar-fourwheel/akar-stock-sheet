@@ -8,6 +8,7 @@ const sheets = google.sheets({version: 'v4', auth: serviceAccountAuth})
 const bookingProcessController = async(req,res) => {    
     // const {chassisNo} = req.query;
     const { quoteID, year, bookingAmount, RemainingAmount, color, variant } = req.body;
+    console.log(year, variant, color);
     
     // const year = '2025';
     // const variant = 'Tigor (P) XZ+ MYC';
@@ -22,6 +23,7 @@ const bookingProcessController = async(req,res) => {
           spreadsheetId: STOCK_SHEET_ID,
           range: "DealerStock",
         });
+      
       
         const rows = getRes.data.values || [];
       
