@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 const BookingPage = () => {
-  const { quoteID } = useParams;
+  const quoteID = useParams().id;
+  console.log(quoteID);
 
   const [bookingAmount, setBookingAmount] = useState(0);
   const [resData, setResData] = useState({});
@@ -17,9 +18,11 @@ const BookingPage = () => {
       })
       .then((res) => {
         setResData(res.data);
+        console.log(res.data);
+        
         setColor(res.data.color); // make color editable
       });
-  }, [quoteID]);
+  }, []);
 
   const finalAmt = parseFloat(resData.finalAmt) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
@@ -50,21 +53,21 @@ const BookingPage = () => {
     <div className="overflow-x-auto mt-6">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <div>Customer Name :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData.CustomerName}</div>
+        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[0]}</div>
         <div>Model Year :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData.model}</div>
+        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[1]}</div>
         <div>Varient :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData.varient}</div>
+        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[2]}</div>
         <div>Color :</div>
         <input
           className="w-full p-2 border border-gray-300 rounded-lg"
-          value={color}
+          defaultValue={resData[3]}
           onChange={(e) => setColor(e.target.value)}
         />
         <div>Total Discount :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData.totalDisc}</div>
+        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[4]}</div>
         <div>Final Amount :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData.finalAmt}</div>
+        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[5]}</div>
         <div>Booking Amount :</div>
         <input
           type="number"

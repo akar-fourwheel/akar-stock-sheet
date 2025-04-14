@@ -28,8 +28,7 @@ function AllQuotation() {
 
   const handleBooking = (row) => {
     const bookingId = row[0];
-    navigate(`/booking-page/${bookingId}`)
-    
+    navigate(`/booking-page/${bookingId}`)    
   };
 
   return (

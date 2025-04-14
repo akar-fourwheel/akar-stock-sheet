@@ -1,41 +1,69 @@
-import googleSecurityHeader from '../../mixins/googleSecurityHeader.js';
+import googleSecurityHeader, { serviceAccountAuth } from '../../mixins/googleSecurityHeader.js';
+import { google } from "googleapis";
 
-const bookingProcessController = async(req,res) => {
-    const {chassisNo} = req.query;
-    const token = await googleSecurityHeader();
+const STOCK_SHEET_ID = "1LHbJCVD_MWP9jFyfD16d-EF8dpmqKjh5EANPNPJ3r7g";
+const sheets = google.sheets({version: 'v4', auth: serviceAccountAuth})
+
+const bookingProcessController = async(req,res) => {    
+    // const {chassisNo} = req.query;
+    const year = '2024';
+    const variant = 'Nexon Pure 1.2';
+    const color = 'CALGARY_WHTE';
 
     // checking if car is still available    
     const status = async(req,res) =>{
+        const getRes = await sheets.spreadsheets.values.get({
+            spreadsheetId: STOCK_SHEET_ID,
+            range: "DealerStock"
+        });
 
-        query = encodeURIComponent(`SELECT * WHERE x='${chassisNo}'`)
-        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=DealerStock&tq=${query}&access_token=${token}`;
+        const rows = getRes.data.values || [];
+        console.log(rows);
+        
+        // const rowIndex = rows.findIndex(row => row.includes(year) && row.includes(variant) && row.includes(color));        
 
-        try{
-            const resu = await fetch(url);
-            const text = await resu.text();
-            const jsonText = text.replace(/^.*?\(/, "").slice(0, -2).replace(/\/\*.*?\*\//g,"").replace(/google.visualization.Query.setResponse\(/, "");
-            const data = JSON.parse(jsonText);
-            const rows = data.table.rows.map(row => row.c.map(cell => (cell ? cell.v : null)));
-            
-            res.send(rows.length); 
-          }
-        catch(e){
-          console.log("data fetch error in booking");
-          res.send("data fetch error in booking");
-        }
+        // if (rowIndex === -1) {
+        //     console.log(`Value "${valueToDelete}" not found.`);
+        //     return;
+        // }
     }
 
-    if(status!=0){
-        try{
-            //copy data from dealer stock
-            // delete row from dealer stock based on oldest age and color
-            //push data in booking stock
-            //return cars info
-            }
-        catch(e){
-            console.log("data manipulation error in");
-            res.send("data manipulation error in");
+    status();
+    
+    try{
+        //copy data from dealer stock
+        const bookedCar = async() =>{
+            const getRes = await sheets.spreadsheets.values.get({
+                spreadsheetId: STOCK_SHEET_ID,
+                range: "DealerStock!G:G"
+            });
+    
+            const rows = getRes.data.values || [];
+        // delete row from dealer stock based on oldest age and color
+        const deleteRequest = {
+            spreadsheetId,
+            resource: {
+              requests: [
+                {
+                  deleteDimension: {
+                    range: {
+                      sheetId: '1077003432',
+                      dimension: 'ROWS',
+                      startIndex: rowIndex,
+                      endIndex: rowIndex + 1,
+                    },
+                  },
+                },
+              ],
+            },
+          };
+        //push data in booking stock
+        //return cars info
         }
+    }
+    catch(e){
+        console.log("data manipulation error in");
+        res.send("data manipulation error in");
     }
 }
 
