@@ -1,6 +1,6 @@
 import googleSecurityHeader from '../../mixins/googleSecurityHeader.js';
 
-const bookingController = async(req,res) => {
+const bookingProcessController = async(req,res) => {
     const {chassisNo} = req.query;
     const token = await googleSecurityHeader();
 
@@ -39,4 +39,4 @@ const bookingController = async(req,res) => {
     }
 }
 
-export default bookingController;
+export default bookingProcessController;

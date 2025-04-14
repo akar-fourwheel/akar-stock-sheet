@@ -1,11 +1,13 @@
 import express from 'express';
 
-import bookingOptionsController from '../Controller/booking/bookingController.js'
-import bookingController from '../Controller/booking/bookingController.js';
+import bookingOptionsController from '../Controller/booking/bookingOptionsController.js'
+import bookingPageController from '../Controller/booking/bookingPageController.js';
+import bookingProcessController from '../Controller/booking/bookingProcessController.js';
 
 const bookingRoute = express.Router();
 
-bookingRoute.get('/check-cars', bookingOptionsController);
-bookingRoute.get('/book-car', bookingController);
+bookingRoute.get('/booking-page', bookingPageController);
+bookingRoute.get('/booking-process', bookingProcessController);
+bookingRoute.get('/booking-check-cars', bookingOptionsController);
 
 export default bookingRoute;

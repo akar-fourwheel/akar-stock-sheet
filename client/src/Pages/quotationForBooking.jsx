@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function AllQuotation() {
 
+  const navigate = useNavigate();
     const [quotaData,setQuotaData] = useState([]);
 
   useEffect(() => {
@@ -23,6 +25,12 @@ function AllQuotation() {
     const dateB = new Date(b[0]);
     return dateB - dateA; // For ascending order
   });
+
+  const handleBooking = (row) => {
+    const bookingId = row[0];
+    navigate(`/booking-page/${bookingId}`)
+    
+  };
 
   return (
     <div className="container mx-auto w-half p-6">
@@ -50,9 +58,9 @@ function AllQuotation() {
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[4]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">
           <button
-            
+            onClick={()=> handleBooking(row)}
             className="px-4 py-2 bg-blue-500 sm:w-50 text-white rounded-lg hover:bg-blue-600"
-            aria-label="Open PDF"
+            aria-label="Book"
           >
             Book
           </button>
