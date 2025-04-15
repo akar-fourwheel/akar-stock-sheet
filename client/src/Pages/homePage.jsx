@@ -39,7 +39,7 @@ const HomePage = (req, res) => {
             </Link>
           </div>
 
-          <div className="mt-6 lg:mt-8 hidden lg:flex justify-center gap-4">
+          {/* <div className="mt-6 lg:mt-8 hidden lg:flex justify-center gap-4">
             <Link to="/quotation-list">
               <button
                 type="button"
@@ -56,11 +56,11 @@ const HomePage = (req, res) => {
                 Booking List
               </button>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg">
+      {/* <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white p-4 shadow-lg">
         <div className="flex justify-center gap-4">
           <Link to="/quotation-list">
             <button
@@ -79,7 +79,7 @@ const HomePage = (req, res) => {
             </button>
           </Link>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
