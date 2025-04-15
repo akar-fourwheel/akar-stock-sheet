@@ -1,13 +1,13 @@
 import googleSecurityHeader from '../../mixins/googleSecurityHeader.js';
 
-const SHEET_ID = '1H-O8RrC31_TWMJ-QxCBSO7UXXRFTYUQ9Uz8Rvpv2Nkc';
+const SHEET_IT ='dede kutte uzair';
 
-const allQuotationController = async (req, res) => {    
-    const query = 'SELECT A ,B, G, C, L, BN, BO'
+const bookingOptionsController = async(req,res) => {
+    const query = 'SELECT M'
     const token = await googleSecurityHeader();
 
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=QuotationSheet&tq=${query}&access_token=${token}`;
-  
+
     try{
         const resu = await fetch(url);
         const text = await resu.text();
@@ -20,9 +20,8 @@ const allQuotationController = async (req, res) => {
     catch(e){
         console.log("data not found");
         console.log(e);
-        
-        res.send("data not found")
     }
+
 }
 
-export default allQuotationController;
+export default bookingOptionsController;

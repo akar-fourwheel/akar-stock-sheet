@@ -15,7 +15,7 @@ const [finalData,setFinalData] = useState([])
 // Handle form submit
 const handleSubmit = (e) => {
   e.preventDefault();
-  axios.get(`${import.meta.env.VITE_SERVER}scheme-data`, {
+  axios.get(`/scheme-data`, {
     params: {
       year: year,
       model: model,
@@ -41,7 +41,7 @@ const dataBasedOnYear = (e) => {
   setGetVariant([]);
   // Fetch models based on selected year
   axios
-    .get(`${import.meta.env.VITE_SERVER}scheme-data`, {
+    .get(`/scheme-data`, {
       params: { year: selectedYear },
     })
     .then((response) => {
@@ -59,7 +59,7 @@ const dataBasedOnYearAndModel = (e) => {
   setVariant('');
   setGetVariant([]);
   axios
-    .get(`${import.meta.env.VITE_SERVER}scheme-data`, {
+    .get(`/scheme-data`, {
       params: {
         year: year,
         model: selectedModel,
@@ -80,7 +80,7 @@ const dataBasedOnYearModelAndFuel = (e) => {
   setGetVariant([]);
 
   axios
-    .get(`${import.meta.env.VITE_SERVER}scheme-data`, {
+    .get(`/scheme-data`, {
       params: {
         year: year,
         model: model,
@@ -99,7 +99,7 @@ const dataBasedOnYearModelAndFuel = (e) => {
 useEffect(() => {
   // Fetch years initially
   axios
-    .get(`${import.meta.env.VITE_SERVER}scheme`)
+    .get(`/scheme`)
     .then((response) => {
       const fetchedYears = response.data.flat();
       setGetYear(fetchedYears);

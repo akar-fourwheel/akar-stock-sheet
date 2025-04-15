@@ -11,6 +11,7 @@ import schemeSheetRoute from './Routes/schemeSheet.js';
 import quotationRoute from './Routes/quotationRoute.js';
 import pdfRoute from './Routes/pdfRoute.js';
 import allQuotationRoute from './Routes/allQuotationsRoute.js';
+import bookingRoute from './Routes/bookingRoute.js'
 
 const app = express();
 const PORT = 8080;
@@ -23,6 +24,7 @@ app.use(schemeSheetRoute);
 app.use(quotationRoute);
 app.use(pdfRoute);
 app.use(allQuotationRoute);
+app.use(bookingRoute);
 
 
 app.listen(process.env.PORT || PORT, () => {
