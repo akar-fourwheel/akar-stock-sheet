@@ -8,7 +8,7 @@ function AllQuotation() {
     const [quotaData,setQuotaData] = useState([]);
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_SERVER}all-quotations`)
+    axios.get(`/all-quotations`)
     .then((response)=> {
         try{
             setQuotaData(response.data);

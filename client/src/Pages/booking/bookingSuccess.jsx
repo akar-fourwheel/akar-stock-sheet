@@ -7,11 +7,11 @@ const bookingSuccess = (req,res) => {
     const {chassis} = useParams();
     
     const [bookingData,setBookingData] = useState([]);
-    const totalAmount = bookingData[8]+bookingData[9];
+    const totalAmount = Number(bookingData[8])+Number(bookingData[9]);
 
     useEffect(()=> {
         try{
-            axios.get(`${import.meta.env.VITE_SERVER}booking-details`,{
+            axios.get(`/booking-details`,{
                 params:{
                     chassis:chassis
                 }

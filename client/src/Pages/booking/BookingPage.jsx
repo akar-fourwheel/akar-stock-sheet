@@ -19,7 +19,7 @@ const BookingPage = () => {
 
   const handleBooking = () => {
     try {      
-      axios.post(`${import.meta.env.VITE_SERVER}booking-process`, {
+      axios.post(`/booking-process`, {
         quoteID: quoteID,
         year: resData[1],
         bookingAmount: bookingAmount,
@@ -48,14 +48,14 @@ const BookingPage = () => {
   useEffect(() => {
     if (!quoteID) return;
   
-    axios.get(`${import.meta.env.VITE_SERVER}booking-page`, {
+    axios.get(`/booking-page`, {
       params: { quoteID },
     }).then((res) => {
       setResData(res.data);
       setColor(res.data[3]);
   
       if (!res.data[3] || res.data[3] === "N/A") {
-        axios.get(`${import.meta.env.VITE_SERVER}booking-color`, {
+        axios.get(`/booking-color`, {
           params: {
             year: res.data[1],
             variant: res.data[2],
@@ -66,6 +66,13 @@ const BookingPage = () => {
       }
     });
   }, [quoteID]);
+
+  useEffect(() => {
+    const maxAmount = resData[5];
+    if (bookingAmount > maxAmount) {
+      setBookingAmount(maxAmount);
+    }
+  }, [bookingAmount]);
 
   return (
     <div className="max-w-4xl mx-auto mt-10 px-4 sm:px-6 lg:px-8">
@@ -111,6 +118,7 @@ const BookingPage = () => {
         <input
           type="number"
           className="p-2 border border-gray-300 rounded-lg"
+          value={bookingAmount} 
           onChange={(e) => setBookingAmount(e.target.value)}
         />
       </div>

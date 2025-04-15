@@ -114,7 +114,7 @@ const quotationPage = () => {
   // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.get(`${import.meta.env.VITE_SERVER}quotation-data`, {
+    axios.get(`/quotation-data`, {
       params: {
         year: year,
         model: model,
@@ -145,7 +145,7 @@ const quotationPage = () => {
 
     // Fetch models based on selected year
     axios
-      .get(`${import.meta.env.VITE_SERVER}quotation-data`, {
+      .get(`/quotation-data`, {
         params: { year: selectedYear },
       })
       .then((response) => {
@@ -165,7 +165,7 @@ const quotationPage = () => {
     setGetVariant([]);
 
     axios
-      .get(`${import.meta.env.VITE_SERVER}quotation-data`, {
+      .get(`/quotation-data`, {
         params: {
           year: year,
           model: selectedModel,
@@ -185,7 +185,7 @@ const quotationPage = () => {
     
   
     axios
-      .get(`${import.meta.env.VITE_SERVER}quotation-data`, {
+      .get(`/quotation-data`, {
         params: {
           year: year,
           model: model,
@@ -204,7 +204,7 @@ const quotationPage = () => {
   useEffect(() => {
     // Fetch years initially
     axios
-      .get(`${import.meta.env.VITE_SERVER}quotation`)
+      .get(`/quotation`)
       .then((response) => {
         const fetchedYears = response.data.flat();
         setGetYear(fetchedYears);
@@ -414,7 +414,7 @@ const quotationPage = () => {
       try {
         setLoading(true);
       
-        const response = await axios.post(`${import.meta.env.VITE_SERVER}generate-pdf`, Qdata);
+        const response = await axios.post(`/generate-pdf`, Qdata);
         const {whatsAppUrl,publicUrl} = response.data;
         
         setWhatsAppUrl(whatsAppUrl);
