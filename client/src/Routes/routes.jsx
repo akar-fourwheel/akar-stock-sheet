@@ -7,6 +7,7 @@ import QuotationPage from '../Pages/quotationPage'
 import AllQuotation from "../Pages/AllQuotation";
 import QuotationForBooking from '../Pages/quotationForBooking'
 import BookingPage from "../Pages/booking/BookingPage";
+import bookingSuccess from "../Pages/booking/bookingSuccess";
 
 export const routes = createBrowserRouter([
     {
@@ -35,7 +36,7 @@ export const routes = createBrowserRouter([
     },
     {
         path:'/booking-success/:chassis',
-        Component:BookingPage
+        Component:bookingSuccess
     },
     {
         path:'/545d65n85g',

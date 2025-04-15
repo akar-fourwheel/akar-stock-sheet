@@ -1,22 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 const BookingPage = () => {
   const quoteID = useParams().id;
+
+  const navigate = useNavigate();
 
   const [bookingAmount, setBookingAmount] = useState(0);
   const [resData, setResData] = useState({});
   const [color, setColor] = useState("");
   const [colorList,setColorList] = useState([]);
+  const [bookingError, setBookingError] = useState("");
   
   const finalAmt = parseFloat(resData[5]) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
 
   const handleBooking = () => {
-    try {
-      console.log(color);
-      
+    try {      
       axios.post(`${import.meta.env.VITE_SERVER}booking-process`, {
         quoteID: quoteID,
         year: resData[1],
@@ -27,16 +29,17 @@ const BookingPage = () => {
       })
       .then(response =>{
         console.log( response.data?.chassisNo);
+        console.log(response.data);
+        
         const chassisNo = response.data?.chassisNo;
         console.log(response.data);
         
         if (chassisNo) {
           navigate(`/booking-success/${chassisNo}`);
         } else {
-          alert("Booking complete, but no Chassis number returned.");
+          setBookingError("Sorry, the car is not available in Dealer Stock. Please try looking into Plant or Zonal Stock.");
         }
-      })
-
+      });
     } catch (e) {
       console.error("Booking error", e);
     }
@@ -65,61 +68,79 @@ const BookingPage = () => {
   }, [quoteID]);
 
   return (
-    <div className="overflow-x-auto mt-6">
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <div>Customer Name :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[0]}</div>
-        <div>Model Year :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[1]}</div>
-        <div>Varient :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[2]}</div>
-        <div>Color :</div>
-{color && color !== "N/A" ? (
-  <select
-    className="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
-    value={color}
-    disabled
-  >
-    <option value={color}>{color}</option>
-  </select>
-) : (
-  <select
-    className="w-full p-2 border border-gray-300 rounded-lg"
-    value={color}
-    onChange={(e) => setColor(e.target.value)}
-  >
-    <option value="">Select a color</option>
-    {colorList.map((clr, index) => (
-      <option key={index} value={clr}>
-        {clr}
-      </option>
-    ))}
-  </select>
-)}
+    <div className="max-w-4xl mx-auto mt-10 px-4 sm:px-6 lg:px-8">
+  <div className="bg-white shadow-lg rounded-2xl p-6 space-y-6">
+    <h2 className="text-2xl font-semibold text-gray-800">Booking Details</h2>
 
-        <div>Total Discount :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[4]}</div>
-        <div>Final Amount :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{resData[5]}</div>
-        <div>Booking Amount :</div>
-        <input
-          type="number"
-          className="w-full p-2 border border-gray-300 rounded-lg"
-          onChange={(e) => setBookingAmount(e.target.value)}
-        />
-        <div>Remaining Amount :</div>
-        <div className="w-full p-2 border border-gray-300 rounded-lg">{RemainingAmt}</div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-sm text-gray-700">
+      <Field label="Customer Name" value={resData[0]} />
+      <Field label="Model Year" value={resData[1]} />
+      <Field label="Variant" value={resData[2]} />
+
+      <div className="flex flex-col">
+        <label className="text-gray-600 mb-1 font-medium">Color</label>
+        {color && color !== "N/A" ? (
+          <select
+            className="p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
+            value={color}
+            disabled
+          >
+            <option value={color}>{color}</option>
+          </select>
+        ) : (
+          <select
+            className="p-2 border border-gray-300 rounded-lg"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          >
+            <option value="">Select a color</option>
+            {colorList.map((clr, index) => (
+              <option key={index} value={clr}>
+                {clr}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
-      <button
-        type="submit"
-        className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600"
-        onClick={handleBooking}
-      >
-        Book Car
-      </button>
+      <Field label="Total Discount" value={resData[4]} />
+      <Field label="Final Amount" value={resData[5]} />
+
+      <div className="flex flex-col">
+        <label className="text-gray-600 mb-1 font-medium">Booking Amount</label>
+        <input
+          type="number"
+          className="p-2 border border-gray-300 rounded-lg"
+          onChange={(e) => setBookingAmount(e.target.value)}
+        />
+      </div>
+
+      <Field label="Remaining Amount" value={RemainingAmt} />
     </div>
+
+    {bookingError && (
+      <div className="p-3 rounded-lg bg-red-100 text-red-700 border border-red-300 text-sm">
+        {bookingError}
+      </div>
+    )}
+
+    <button
+      type="submit"
+      className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
+      onClick={handleBooking}
+    >
+      Book Car
+    </button>
+  </div>
+</div>
+
   );
 };
+const Field = ({ label, value }) => (
+  <div className="flex flex-col">
+    <label className="text-gray-600 mb-1 font-medium">{label}</label>
+    <div className="p-2 border border-gray-300 rounded-lg bg-gray-50">{value}</div>
+  </div>
+);
 
 export default BookingPage;
