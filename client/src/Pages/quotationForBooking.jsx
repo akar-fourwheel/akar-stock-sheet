@@ -27,8 +27,8 @@ function AllQuotation() {
   });
 
   const handleBooking = (row) => {
-    const bookingId = row[0];
-    navigate(`/booking-page/${bookingId}`)    
+    const quoteID = row[0];
+    navigate(`/booking-form/${quoteID}`)    
   };
 
   return (
@@ -38,10 +38,10 @@ function AllQuotation() {
 <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
   <thead>
     <tr className="bg-gray-100">
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Booking_ID</th>
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Customer_Name</th>
-      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Created_on</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Quotation_ID</th>
       <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Sales_Advicer</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Created_on</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Customer_Name</th>
       <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Varient</th>
       <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Booking</th>
     </tr>

@@ -1,12 +1,13 @@
 import googleSecurityHeader from '../../mixins/googleSecurityHeader.js';
 
-async function bookingPageController(req, res) {
-    const SHEET_ID = "1tDWKz804lqfo0syFuD8gBLGwdVdwcWoUfPro0Yc41AA";
+async function bookingFormController(req, res) {
+    const QUOT_SHEET_ID = "1H-O8RrC31_TWMJ-QxCBSO7UXXRFTYUQ9Uz8Rvpv2Nkc";
+    const { quoteID } = req.query;
     
-    const query = `SELECT A,C,D,G,O,Q,K`
+    const query = `SELECT C, I, L, M, AD, BM, G WHERE A = '${quoteID}'`
     const token = await googleSecurityHeader();
 
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=QuotationSheet&tq=${query}&access_token=${token}`;
+    const url = `https://docs.google.com/spreadsheets/d/${QUOT_SHEET_ID}/gviz/tq?sheet=QuotationSheet&tq=${query}&access_token=${token}`;
 
     try {
         const resu = await fetch(url);
@@ -15,7 +16,7 @@ async function bookingPageController(req, res) {
         const data = JSON.parse(jsonText);
         const rows = data.table.rows.map(row => row.c.map(cell => (cell ? cell.v : null)));
 
-        res.send(rows);
+        res.send(rows.flat());
     }
     catch (e) {
         console.log("data not found");
@@ -25,4 +26,4 @@ async function bookingPageController(req, res) {
     }
 }
 
-export default bookingPageController;
+export default bookingFormController;

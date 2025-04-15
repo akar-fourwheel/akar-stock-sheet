@@ -5,16 +5,9 @@ const STOCK_SHEET_ID = "1LHbJCVD_MWP9jFyfD16d-EF8dpmqKjh5EANPNPJ3r7g";
 const BOOK_SHEET_ID = "1tDWKz804lqfo0syFuD8gBLGwdVdwcWoUfPro0Yc41AA"
 const sheets = google.sheets({version: 'v4', auth: serviceAccountAuth})
 
-const bookingProcessController = async(req,res) => {    
-    // const {chassisNo} = req.query;
+const bookingProcessController = async(req,res) => {
     const { quoteID, year, bookingAmount, RemainingAmount, color, variant } = req.body;
-    console.log(year, variant, color);
-    
-    // const year = '2025';
-    // const variant = 'Tigor (P) XZ+ MYC';
-    // const color = 'PRISTIN_WHTE';
-
-    // checking if car is still available    
+    console.log(year, variant, color);  
     const status = async () => {
         let rowIdx = -1;
         let maxAge = -Infinity;

@@ -7,7 +7,7 @@ const bookingSuccess = (req,res) => {
     const {chassis} = useParams();
     
     const [bookingData,setBookingData] = useState([]);
-    const totalAmount = Number(bookingData[8])+Number(bookingData[9]);
+    const totalAmount = Number(bookingData[10])+Number(bookingData[9]);
 
     useEffect(()=> {
         try{
@@ -39,16 +39,17 @@ const bookingSuccess = (req,res) => {
             </div>
     
             <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 text-gray-700 text-sm">
-              <Info label="Booking ID" value={bookingData[0]} />
-              <Info label="Year" value={bookingData[1]} />
-              <Info label="Chassis Number" value={bookingData[2]} />
-              <Info label="Engine Number" value={bookingData[3]} />
-              <Info label="Model" value={bookingData[4]} />
-              <Info label="Fuel Type" value={bookingData[5]} />
-              <Info label="Variant" value={bookingData[6]} />
-              <Info label="Color" value={bookingData[7]} />
-              <Info label="Booking Amount" value={bookingData[8] === 0 ? "None" : '₹'+bookingData[8]} highlight/>
-              <Info label="Remaining Amount" value={bookingData[9] === 0 ? "None" : '₹'+bookingData[9]} highlight />
+            <Info label="Customer Name" value={bookingData[0]} />
+              <Info label="Booking ID" value={bookingData[1]} />
+              <Info label="Year" value={bookingData[2]} />
+              <Info label="Chassis Number" value={bookingData[3]} />
+              <Info label="Engine Number" value={bookingData[4]} />
+              <Info label="Model" value={bookingData[5]} />
+              <Info label="Fuel Type" value={bookingData[6]} />
+              <Info label="Variant" value={bookingData[7]} />
+              <Info label="Color" value={bookingData[8]} />
+              <Info label="Booking Amount" value={bookingData[9] === 0 ? "None" : '₹'+bookingData[9]} highlight/>
+              <Info label="Remaining Amount" value={bookingData[10] === 0 ? "None" : '₹'+bookingData[10]} highlight />
               <Info label="Final Amount" value={'₹' + totalAmount} highlight />
             </div>
     

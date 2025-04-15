@@ -3,7 +3,7 @@ const SHEET_ID = '1tDWKz804lqfo0syFuD8gBLGwdVdwcWoUfPro0Yc41AA'
 
 const bookingDetails = async(req,res) => {
     const { chassis } = req.query;
-    const query = encodeURIComponent(`SELECT A,E,I,J,K,L,M,O,V,W WHERE I='${chassis}'`);
+    const query = encodeURIComponent(`SELECT D,A,G,K,L,M,N,O,Q,X,Y WHERE K='${chassis}'`);
     const token = await googleSecurityHeader();
     const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=DealerStock&tq=${query}&access_token=${token}`;
 

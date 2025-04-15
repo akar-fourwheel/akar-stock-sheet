@@ -1,154 +1,75 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
-const BookingPage = () => {
-  const quoteID = useParams().id;
+function BookingPage() {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const [bookingAmount, setBookingAmount] = useState(0);
-  const [resData, setResData] = useState({});
-  const [color, setColor] = useState("");
-  const [colorList,setColorList] = useState([]);
-  const [bookingError, setBookingError] = useState("");
-  
-  const finalAmt = parseFloat(resData[5]) || 0;
-  const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
+    const [quotaData,setQuotaData] = useState([]);
 
-  const handleBooking = () => {
-    try {      
-      axios.post(`/booking-process`, {
-        quoteID: quoteID,
-        year: resData[1],
-        bookingAmount: bookingAmount,
-        RemainingAmount: RemainingAmt,
-        color: color,
-        variant: resData[2]
-      })
-      .then(response =>{
-        console.log( response.data?.chassisNo);
-        console.log(response.data);
-        
-        const chassisNo = response.data?.chassisNo;
-        console.log(response.data);
-        
-        if (chassisNo) {
-          navigate(`/booking-success/${chassisNo}`);
-        } else {
-          setBookingError("Sorry, the car is not available in Dealer Stock. Please try looking into Plant or Zonal Stock.");
+    function handleNavi(ChassisNo){
+      navigate(`/booking-success/${ChassisNo}`);
+    }
+
+  useEffect(() => {
+    axios.get(`/booking-page`)
+    .then((response)=> {
+        try{
+            setQuotaData(response.data);
         }
-      });
-    } catch (e) {
-      console.error("Booking error", e);
-    }
-  };
-
-  useEffect(() => {
-    if (!quoteID) return;
-  
-    axios.get(`/booking-page`, {
-      params: { quoteID },
-    }).then((res) => {
-      setResData(res.data);
-      setColor(res.data[3]);
-  
-      if (!res.data[3] || res.data[3] === "N/A") {
-        axios.get(`/booking-color`, {
-          params: {
-            year: res.data[1],
-            variant: res.data[2],
-          },
-        }).then((res) => {
-          setColorList(res.data);
-        });
-      }
-    });
-  }, [quoteID]);
-
-  useEffect(() => {
-    const maxAmount = resData[5];
-    if (bookingAmount > maxAmount) {
-      setBookingAmount(maxAmount);
-    }
-  }, [bookingAmount]);
+        catch(e){
+            console.log("quotation data could not be set");
+            
+        }
+    })
+  },[])
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 px-4 sm:px-6 lg:px-8">
-  <div className="bg-white shadow-lg rounded-2xl p-6 space-y-6">
-    <h2 className="text-2xl font-semibold text-gray-800">Booking Details</h2>
-
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-sm text-gray-700">
-      <Field label="Customer Name" value={resData[0]} />
-      <Field label="Model Year" value={resData[1]} />
-      <Field label="Variant" value={resData[2]} />
-
-      <div className="flex flex-col">
-        <label className="text-gray-600 mb-1 font-medium">Color</label>
-        {color && color !== "N/A" ? (
-          <select
-            className="p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
-            value={color}
-            disabled
+    <div className="container mx-auto w-half p-6">
+      <h2 className="text-3xl font-semibold text-center mb-8 text-gray-800">All Quotation Data</h2>
+      <div className="overflow-x-auto">
+<table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+  <thead>
+    <tr className="bg-gray-100">
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Booking_ID</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Sales Advicer</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Customer Name</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Year</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Varient</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Color</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Chassis_No</th>
+      <th className="sm:px-4 sm:py-3 px-1 py-2 text-left text-sm sm:text-base font-medium text-gray-700">Get_info</th>
+    </tr>
+  </thead>
+  <tbody>
+    {quotaData.map((row) => (
+      <tr key={row} className="border-b hover:bg-gray-50">
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[0]}</td>
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base font-medium text-gray-700">{row[1]}</td>
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[2]}</td>
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[3]}</td>
+        
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[4]}</td>
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[5]}</td>
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[6]}</td>
+        <td>
+        <button
+            onClick={()=> handleNavi(row[6])}
+            className="px-4 py-2 bg-blue-500 sm:w-50 text-white rounded-lg hover:bg-blue-600"
+            aria-label="Book"
           >
-            <option value={color}>{color}</option>
-          </select>
-        ) : (
-          <select
-            className="p-2 border border-gray-300 rounded-lg"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-          >
-            <option value="">Select a color</option>
-            {colorList.map((clr, index) => (
-              <option key={index} value={clr}>
-                {clr}
-              </option>
-            ))}
-          </select>
-        )}
+            Information
+          </button>
+          </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
       </div>
-
-      <Field label="Total Discount" value={resData[4]} />
-      <Field label="Final Amount" value={resData[5]} />
-
-      <div className="flex flex-col">
-        <label className="text-gray-600 mb-1 font-medium">Booking Amount</label>
-        <input
-          type="number"
-          className="p-2 border border-gray-300 rounded-lg"
-          value={bookingAmount} 
-          onChange={(e) => setBookingAmount(e.target.value)}
-        />
-      </div>
-
-      <Field label="Remaining Amount" value={RemainingAmt} />
     </div>
-
-    {bookingError && (
-      <div className="p-3 rounded-lg bg-red-100 text-red-700 border border-red-300 text-sm">
-        {bookingError}
-      </div>
-    )}
-
-    <button
-      type="submit"
-      className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-200"
-      onClick={handleBooking}
-    >
-      Book Car
-    </button>
-  </div>
-</div>
-
   );
-};
-const Field = ({ label, value }) => (
-  <div className="flex flex-col">
-    <label className="text-gray-600 mb-1 font-medium">{label}</label>
-    <div className="p-2 border border-gray-300 rounded-lg bg-gray-50">{value}</div>
-  </div>
-);
+}
 
 export default BookingPage;
