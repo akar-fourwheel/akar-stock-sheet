@@ -6,6 +6,7 @@ import bookingProcessController from '../Controller/booking/bookingProcessContro
 import bookingColorController from '../Controller/booking/bookingColorController.js';
 import bookingDetails from '../Controller/booking/bookingDetailsController.js';
 import bookingPageController from '../Controller/booking/bookingPageController.js';
+import bookingCancelController from '../Controller/booking/bookingCancelController.js';
 
 const bookingRoute = express.Router();
 
@@ -15,5 +16,6 @@ bookingRoute.post('/booking-process', bookingProcessController);
 bookingRoute.get('/booking-check-cars', bookingOptionsController);
 bookingRoute.get('/booking-color', bookingColorController);
 bookingRoute.get('/booking-details',bookingDetails);
+bookingRoute.get('/booking-cancel',bookingCancelController);
 
 export default bookingRoute;

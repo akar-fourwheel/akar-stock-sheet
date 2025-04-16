@@ -378,7 +378,7 @@ const quotationPage = () => {
       rtoType: rto, 
       rtoAmt: finalData[rto],
       scrapBy: (scrap ? "Dealer" : rto == "Scrap RTO" ? "Self" : "N/A"), 
-      cod: (scrap ? 30000 : 0), 
+      cod: (scrap ? 35000 : 0), 
       mudflap: (selectedAcc.some((opt) => opt.label === "Mudflap") ? selectedAcc.find((opt) => opt.label === "Mudflap").value : 0), 
       uniMatting: (selectedAcc.some((opt) => opt.label === "Universal Matting") ? selectedAcc.find((opt) => opt.label === "Universal Matting").value : 0), 
       seatCover: (selectedAcc.some((opt) => opt.label === "Seat Cover") ? selectedAcc.find((opt) => opt.label === "Seat Cover").value : 0), 
@@ -772,7 +772,7 @@ const quotationPage = () => {
                   <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[key]}</div>
                   {i == 32 && <>
                   <div>Total Price:</div>
-                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 30000 : 0)}</div> 
+                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 35000 : 0)}</div> 
                   </>}
                 </>}
                 </Fragment>
