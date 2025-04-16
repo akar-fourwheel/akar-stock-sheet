@@ -20,13 +20,13 @@ const BookingForm = () => {
   const handleBooking = () => {
     try {      
       axios.post(`/booking-process`, {
-        quoteID: quoteID,
+        quoteID,
         customer:resData[0],
         sales_adv:resData[6],
         year: resData[1],
         bookingAmount: bookingAmount,
         RemainingAmount: RemainingAmt,
-        color: color,
+        color,
         variant: resData[2]
       })
       .then(response =>{
@@ -39,8 +39,30 @@ const BookingForm = () => {
         if (chassisNo) {
           navigate(`/booking-success/${chassisNo}`);
         } else {
-          setBookingError("Sorry, the car is not available in Dealer Stock. Please try looking into Plant or Zonal Stock.");
+          try{
+
+            axios.post('/booking-request',{
+              quoteID,
+              sales_adv:resData[6],
+              customer:resData[0],
+              year:resData[1],
+              variant:resData[2],
+              fuel:"petrol",
+              color
+            })
+            .then(res => {
+              if(res.data = "request raised")
+                setBookingError("Sorry, the car is not available in Dealer Stock. Request raised for the desired car.");
+              else
+              setBookingError("Sorry, could not request stock.");
+          })
         }
+        catch(e){
+          console.log(e);
+          setBookingError("Sorry, something went wrong Please try again after some time...");
+        }
+        }
+          
       });
     } catch (e) {
       console.error("Booking error", e);
