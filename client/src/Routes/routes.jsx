@@ -7,7 +7,7 @@ import QuotationPage from '../Pages/quotationPage'
 import AllQuotation from "../Pages/AllQuotation";
 import QuotationForBooking from '../Pages/quotationForBooking'
 import BookingPage from "../Pages/booking/BookingPage";
-import BookingForm from "../Pages/booking/BookingForm";
+import BookingForm from "../Pages/booking/bookingForm";
 import bookingSuccess from "../Pages/booking/bookingSuccess";
 
 export const routes = createBrowserRouter([
