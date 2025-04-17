@@ -1,8 +1,27 @@
 import { Link } from "react-router";
+import { BellIcon } from "@heroicons/react/24/outline";
+
+import NotificationOverlay from "../Components/homePage/NotificationOverlay";
+import { useState } from "react";
+
 
 const HomePage = (req, res) => {
+  const [showOverlay, setShowOverlay] = useState(false);
+
   return (
     <>
+      <div className="absolute top-6 right-6 z-10">
+        <button
+          onClick={() => setShowOverlay(true)}
+          className="relative p-2 rounded-full bg-white shadow hover:bg-gray-100 transition"
+        >
+          <BellIcon className="h-8 w-8 text-gray-800" />
+          {/* <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span> */}
+        </button>
+      </div>
+
+      {showOverlay && <NotificationOverlay onClose={() => setShowOverlay(false)} />}
+
       <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 flex items-center justify-center p-6">
         <div className="bg-white p-8 rounded-lg shadow-xl max-w-4xl w-full">
           <div>

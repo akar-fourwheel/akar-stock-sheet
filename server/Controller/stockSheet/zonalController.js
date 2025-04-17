@@ -9,7 +9,7 @@ const zonalFormData = async (req, res) => {
     let query;
   
     if(carYear && carModel && carFuel){
-      query = encodeURIComponent(`SELECT C,F,K,R,U WHERE M=${carYear} AND D='${carModel}' AND B='${carFuel}' AND G='Rajasthan' AND L='Available'`) // year is in number
+      query = encodeURIComponent(`SELECT C,F,K,R,U WHERE M=${carYear} AND UPPER(D)='${carModel.toUpperCase()}' AND UPPER(B)='${carFuel.toUpperCase()}' AND G='Rajasthan' AND L='Available'`) // year is in number
       // need to figure out how to group by
     }
   

@@ -4,7 +4,7 @@ async function bookingFormController(req, res) {
     const QUOT_SHEET_ID = "1H-O8RrC31_TWMJ-QxCBSO7UXXRFTYUQ9Uz8Rvpv2Nkc";
     const { quoteID } = req.query;
     
-    const query = `SELECT C, I, L, M, AD, BM, G WHERE A = '${quoteID}'`
+    const query = `SELECT C, I, L, M, AD, BM, G, K WHERE A = '${quoteID}'`
     const token = await googleSecurityHeader();
 
     const url = `https://docs.google.com/spreadsheets/d/${QUOT_SHEET_ID}/gviz/tq?sheet=QuotationSheet&tq=${query}&access_token=${token}`;

@@ -13,6 +13,7 @@ const BookingForm = () => {
   const [color, setColor] = useState("");
   const [colorList,setColorList] = useState([]);
   const [bookingError, setBookingError] = useState("");
+  const [errorColor,setErrorColor] = useState('')
   
   const finalAmt = parseFloat(resData[5]) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
@@ -20,13 +21,13 @@ const BookingForm = () => {
   const handleBooking = () => {
     try {      
       axios.post(`/booking-process`, {
-        quoteID: quoteID,
+        quoteID,
         customer:resData[0],
         sales_adv:resData[6],
         year: resData[1],
         bookingAmount: bookingAmount,
         RemainingAmount: RemainingAmt,
-        color: color,
+        color,
         variant: resData[2]
       })
       .then(response =>{
@@ -39,8 +40,35 @@ const BookingForm = () => {
         if (chassisNo) {
           navigate(`/booking-success/${chassisNo}`);
         } else {
-          setBookingError("Sorry, the car is not available in Dealer Stock. Please try looking into Plant or Zonal Stock.");
+          try{
+
+            axios.post('/booking-request',{
+              quoteID,
+              sales_adv:resData[6],
+              customer:resData[0],
+              year:resData[1],
+              variant:resData[2],
+              fuel:resData[7],
+              color
+            })
+            .then(res => {
+              if(res.data = "request raised"){
+                setErrorColor("amber");
+                setBookingError("Sorry, the car is not available in Dealer Stock. Request raised for the desired car.");
+              }
+              else{
+                setErrorColor("red")
+                setBookingError("Sorry, could not request stock.");
+              }
+          })
         }
+        catch(e){
+          console.log(e);
+          setErrorColor("red");
+          setBookingError("Sorry, something went wrong Please try again after some time...");
+        }
+        }
+          
       });
     } catch (e) {
       console.error("Booking error", e);
@@ -129,7 +157,7 @@ const BookingForm = () => {
     </div>
 
     {bookingError && (
-      <div className="p-3 rounded-lg bg-red-100 text-red-700 border border-red-300 text-sm">
+      <div className={`p-3 rounded-lg ${errorColor=="amber" ? "bg-amber-100 text-amber-700 border-amber-300" : "bg-red-100 text-red-700 border-red-300"} border text-sm`}>
         {bookingError}
       </div>
     )}

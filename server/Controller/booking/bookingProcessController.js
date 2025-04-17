@@ -6,49 +6,12 @@ const BOOK_SHEET_ID = "1tDWKz804lqfo0syFuD8gBLGwdVdwcWoUfPro0Yc41AA"
 const sheets = google.sheets({version: 'v4', auth: serviceAccountAuth})
 
 const bookingProcessController = async(req,res) => {
-    const { quoteID, year, bookingAmount, RemainingAmount, color, variant } = req.body;
-    console.log(year, variant, color);  
-    const status = async () => {
-        let rowIdx = -1;
-        let maxAge = -Infinity;
-      
-        const getRes = await sheets.spreadsheets.values.get({
-          spreadsheetId: STOCK_SHEET_ID,
-          range: "DealerStock",
-        });
-      
-      
-        const rows = getRes.data.values || [];
-      
-        // Skip header
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          const age = parseFloat(row[1]);
-      
-          const matches =
-            row[2] === year &&
-            row[10].toUpperCase() === variant.toUpperCase() &&
-            row[12].toUpperCase() === color.toUpperCase();
-      
-          if (matches && !isNaN(age) && age > maxAge) {
-            maxAge = age;
-            rowIdx = i; // actual index in original sheet
-          }
-        }
-      
-        if (rowIdx === -1) {
-          console.log("No matching car found.");
-          return null;
-        }
-      
-        const carToBook = rows[rowIdx];
-        return { carToBook, rowIdx };
-      };      
+    const { quoteID, year,sales_adv,customer, bookingAmount, RemainingAmount, color, variant } = req.body;
+    console.log(year, variant, color);      
     
     try {
         // Get car data and row index to delete
         const { carToBook, rowIdx } = await status();
-        
       
         // Delete the row from Dealer Stock
         const deleteRequest = {
@@ -70,7 +33,7 @@ const bookingProcessController = async(req,res) => {
         };
         await sheets.spreadsheets.batchUpdate(deleteRequest);
 
-        const finalRow = ["BI-"+quoteID, quoteID, ...carToBook, bookingAmount, RemainingAmount];        
+        const finalRow = ["BI-"+quoteID, quoteID,sales_adv,customer, ...carToBook, bookingAmount, RemainingAmount];        
       
         // Push car data to Booking Stock
         await sheets.spreadsheets.values.append({
@@ -91,5 +54,42 @@ const bookingProcessController = async(req,res) => {
         res.send("Couldn't post!");
     }
 }
+
+const status = async () => {
+  let rowIdx = -1;
+  let maxAge = -Infinity;
+
+  const getRes = await sheets.spreadsheets.values.get({
+    spreadsheetId: STOCK_SHEET_ID,
+    range: "DealerStock",
+  });
+
+
+  const rows = getRes.data.values || [];
+
+  // Skip header
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const age = parseFloat(row[1]);
+
+    const matches =
+      row[2] === year &&
+      row[10].toUpperCase() === variant.toUpperCase() &&
+      row[12].toUpperCase() === color.toUpperCase();
+
+    if (matches && !isNaN(age) && age > maxAge) {
+      maxAge = age;
+      rowIdx = i; // actual index in original sheet
+    }
+  }
+
+  if (rowIdx === -1) {
+    console.log("No matching car found.");
+    return null;
+  }
+
+  const carToBook = rows[rowIdx];
+  return { carToBook, rowIdx };
+};
 
 export default bookingProcessController;

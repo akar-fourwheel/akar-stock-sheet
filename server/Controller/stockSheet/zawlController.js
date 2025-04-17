@@ -9,7 +9,7 @@ const zawlFormData = async (req, res) => {
     let query;
     
     if(carModel && carFuel){
-      query = encodeURIComponent(`SELECT C,O,COUNT(O),L WHERE B='${carModel}' AND D='${carFuel}' GROUP BY B,C,D,O,L`) // year is in number
+      query = encodeURIComponent(`SELECT C,O,COUNT(O),L WHERE UPPER(B)='${carModel.toUpperCase()}' AND UPPER(D)='${carFuel.toUpperCase()}' GROUP BY B,C,D,O,L`) // year is in number
       
       // need to figure out how to group by
     }
