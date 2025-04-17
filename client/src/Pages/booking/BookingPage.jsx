@@ -57,7 +57,7 @@ function BookingPage() {
     className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
   >
     <option value="all">Show All</option>
-    <option value="cancelled">Cancelled Only</option>
+    <option value="cancelled">Cancelled</option>
     <option value="bookings">bookings</option>
   </select>
 </div>

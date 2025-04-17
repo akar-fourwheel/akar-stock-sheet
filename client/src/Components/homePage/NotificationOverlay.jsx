@@ -2,29 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 
-
-const mockData = [
-    {
-        name: "BHAWANI SHANKAR",
-        salesAdvisor: "Apoorv Pareek",
-        car: "Tiago EV LR XZ+ Tech Lux",
-        status: "requested",
-    },
-    {
-        name: "APOORV PAREEK",
-        salesAdvisor: "Apoorv Pareek",
-        car: "Tiago EV LR XZ+ Tech Lux",
-        status: "arrived",
-    },
-];
-
 const NotificationOverlay = ({ onClose }) => {
 
     const [bookingData, setBookingData] = useState([]);
     const [filter, setFilter] = useState("arrived");
     const modalRef = useRef();
 
-    const filteredData = bookingData.filter((entry) => entry[7] === filter);
+    const filteredData = bookingData.filter((entry) => entry[7] === filter && (entry[1]!=null && entry[2]!=null && entry[4]!=null));
 
     // Close when clicking outside
     useEffect(() => {

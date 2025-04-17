@@ -9,7 +9,7 @@ const sheets = google.sheets({ version: 'v4', auth: serviceAccountAuth });
 const bookingFormController = async(req,res) => {
 
     const {quoteID,sales_adv,customer,year,variant,fuel,color} = req.body;
-    const carData = [quoteID,sales_adv,customer,year,variant,fuel,color,"requesting"];
+    const carData = [quoteID,sales_adv,customer,year,variant,fuel,color];
 
     try {
         await sheets.spreadsheets.values.append({

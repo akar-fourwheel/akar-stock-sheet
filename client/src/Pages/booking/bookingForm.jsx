@@ -47,7 +47,7 @@ const BookingForm = () => {
               customer:resData[0],
               year:resData[1],
               variant:resData[2],
-              fuel:"petrol",
+              fuel:resData[7],
               color
             })
             .then(res => {
