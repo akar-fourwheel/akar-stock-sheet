@@ -764,15 +764,14 @@ const quotationPage = () => {
                       onChange={handleHpn}
                       value={selectedHpn}
                       className="w-full p-1 rounded-lg"
-                      classNamePrefix="react-select"
                     />
                   </> :
                 <>
                   <div key={i}>{key} :</div>
                   <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[key]}</div>
-                  {i == 32 && <>
+                  {i == 30 && <>
                   <div>Total Price:</div>
-                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.AMC + finalData.RSA + finalData.FastTag + (scrap ? 35000 : 0)}</div> 
+                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.FastTag + (scrap ? 35000 : 0)}</div> 
                   </>}
                 </>}
                 </Fragment>
