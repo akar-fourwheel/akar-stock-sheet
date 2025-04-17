@@ -46,11 +46,11 @@ function AllQuotation() {
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[1]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[0]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base font-medium text-gray-700">{row[2]}</td>
-        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[1]}</td>
-        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[3]}</td>
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-900">{row[3]}</td>
+        <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">{row[4]}</td>
         <td className="sm:px-4 sm:py-3 px-1 py-2 text-sm w-50 sm:text-base text-gray-700">
           <button
-            onClick={() => window.open(row[4], '_blank')}
+            onClick={() => window.open(row[5], '_blank')}
             className="px-4 py-2 bg-blue-500 sm:w-50 text-white rounded-lg hover:bg-blue-600"
             aria-label="Open PDF"
           >
@@ -59,7 +59,7 @@ function AllQuotation() {
         </td>
         <td className="sm:px-4 sm:py-3 px-3 w-50 py-2 text-sm text-gray-700">
           <button
-            onClick={() => window.location.href = row[5]}
+            onClick={() => window.location.href = row[6]}
             className="px-4 py-2 bg-green-500 sm:w-50 text-white rounded-lg hover:bg-green-600"
             aria-label="Send WhatsApp message"
           >
