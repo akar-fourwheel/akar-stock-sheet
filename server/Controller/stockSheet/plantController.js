@@ -9,11 +9,11 @@ const plantFormData = async (req, res) => {
     let query;
   
     if(carYear=='2024' && carModel && carFuel){
-      query = encodeURIComponent(`SELECT E, D, R WHERE A='${carModel}' AND F='${carFuel}'`)
+      query = encodeURIComponent(`SELECT E, D, R WHERE UPPER(A)='${carModel.toUpperCase()}' AND UPPER(F)='${carFuel.toUpperCase()}'`)
     }
 
     if(carYear=='2025' && carModel && carFuel){
-        query = encodeURIComponent(`SELECT E, D, AC WHERE A='${carModel}' AND F='${carFuel}'`)
+        query = encodeURIComponent(`SELECT E, D, AC WHERE UPPER(A)='${carModel.toUpperCase()}' AND UPPER(F)='${carFuel.toUpperCase()}'`)
       }
   
   const token = await googleSecurityHeader();
@@ -24,13 +24,15 @@ const plantFormData = async (req, res) => {
       const text = await resu.text();
       const jsonText = text.replace(/^.*?\(/, "").slice(0, -2).replace(/\/\*.*?\*\//g,"").replace(/google.visualization.Query.setResponse\(/, "");
       const data = JSON.parse(jsonText);
-      const rows = data.table.rows.map(row => row.c.map(cell => (cell ? cell.v : null)));
-      const filteredData = rows.filter(row => !row.includes(0));
+      // const rows = data.table.rows.map(row => row.c.map(cell => (cell ? cell.v : null)));
+      // const filteredData = rows.filter(row => !row.includes(0));
+      console.log(data);
+      
 
-      res.send(filteredData);
+      // res.send(filteredData);
     }
   catch(e){
-    console.log("data not found");
+    console.log(e);
     
     res.send("data not found");
   }

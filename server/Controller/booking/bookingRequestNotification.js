@@ -2,10 +2,20 @@ import googleSecurityHeader from "../../mixins/googleSecurityHeader.js";
 const SHEET_ID = "1tDWKz804lqfo0syFuD8gBLGwdVdwcWoUfPro0Yc41AA";
 const STOCK_SHEET_ID = process.env.SHEET_ID;
 
+const today = new Date();
+const fiveDaysAgo = new Date(today);
+fiveDaysAgo.setDate(today.getDate() - 5);
+
+// Format the date as yyyy-mm-dd (the format Google Sheets expects)
+const year = fiveDaysAgo.getFullYear();
+const month = (fiveDaysAgo.getMonth() + 1).toString().padStart(2, '0');
+const day = fiveDaysAgo.getDate().toString().padStart(2, '0');
+
+const formattedDate = `${year}-${month}-${day}`;
 const BookingRequestNotification = async (req, res) => {
   try {
     const token = await googleSecurityHeader();
-    const reqQuery = encodeURIComponent("SELECT A,B,C,D,E,F,G");
+    const reqQuery = encodeURIComponent(`SELECT A,B,C,D,E,F,G,H WHERE H >= date '${formattedDate}'`);
     const reqUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=RequestedStock&tq=${reqQuery}&access_token=${token}`;
 
     const reqStock = await getRequestedStock(reqUrl);
@@ -13,7 +23,7 @@ const BookingRequestNotification = async (req, res) => {
     const result = [];
 
     for (const row of reqStock) {
-      const [_, __, ___, c, k, j, m] = row; // indexes 3,4,5,6
+      const [_, __, ___, c, k, j, m, h] = row; // indexes 3,4,5,6
 
       const dealQuery = encodeURIComponent(
         `SELECT C,K,J,M WHERE C='${c}' AND K='${k}' AND J='${j}' AND M='${m}'`
@@ -48,13 +58,14 @@ const getRequestedStock = async (url) => {
       .slice(0, -2)
       .replace(/\/\*.*?\*\//g, "")
       .replace(/google.visualization.Query.setResponse\(/, "");
-    const data = JSON.parse(jsonText);
+    const data = JSON.parse(jsonText);    
     const rows = data.table.rows.map((row) =>
       row.c.map((cell) => (cell ? cell.v : null))
     );
-
-    return rows.slice(1); // skip headers
-  } catch (e) {
+  
+    return rows;
+  } 
+  catch (e) {
     console.log("data not found");
     return [];
   }

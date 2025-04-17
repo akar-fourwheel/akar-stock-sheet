@@ -8,7 +8,9 @@ const NotificationOverlay = ({ onClose }) => {
     const [filter, setFilter] = useState("arrived");
     const modalRef = useRef();
 
-    const filteredData = bookingData.filter((entry) => entry[7] === filter && (entry[1]!=null && entry[2]!=null && entry[4]!=null));
+    const filteredData = 
+        bookingData.filter((entry) => entry[8] === filter && (entry[1]!=null && entry[2]!=null && entry[4]!=null))
+        .sort((a, b) => new Date(b[7].slice(5,14)) - new Date(a[7].slice(5,14)));
 
     // Close when clicking outside
     useEffect(() => {
@@ -74,7 +76,7 @@ const NotificationOverlay = ({ onClose }) => {
                     {filteredData.map((entry, idx) => (
                         <div
                             key={idx}
-                            className={`${entry[7] == "requested" ? "bg-yellow-100 border border-yellow-300" : "bg-green-100 border border-green-300 "}  rounded-xl p-4 shadow-sm`}
+                            className={`${entry[8] == "requested" ? "bg-yellow-100 border border-yellow-300" : "bg-green-100 border border-green-300 "}  rounded-xl p-4 shadow-sm`}
                         >
                             <div className="text-lg font-semibold text-gray-800">
                                 {entry[2]}

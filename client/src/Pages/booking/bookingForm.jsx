@@ -13,6 +13,7 @@ const BookingForm = () => {
   const [color, setColor] = useState("");
   const [colorList,setColorList] = useState([]);
   const [bookingError, setBookingError] = useState("");
+  const [errorColor,setErrorColor] = useState('')
   
   const finalAmt = parseFloat(resData[5]) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
@@ -51,14 +52,19 @@ const BookingForm = () => {
               color
             })
             .then(res => {
-              if(res.data = "request raised")
+              if(res.data = "request raised"){
+                setErrorColor("amber");
                 setBookingError("Sorry, the car is not available in Dealer Stock. Request raised for the desired car.");
-              else
-              setBookingError("Sorry, could not request stock.");
+              }
+              else{
+                setErrorColor("red")
+                setBookingError("Sorry, could not request stock.");
+              }
           })
         }
         catch(e){
           console.log(e);
+          setErrorColor("red");
           setBookingError("Sorry, something went wrong Please try again after some time...");
         }
         }
@@ -151,7 +157,7 @@ const BookingForm = () => {
     </div>
 
     {bookingError && (
-      <div className="p-3 rounded-lg bg-red-100 text-red-700 border border-red-300 text-sm">
+      <div className={`p-3 rounded-lg ${errorColor=="amber" ? "bg-amber-100 text-amber-700 border-amber-300" : "bg-red-100 text-red-700 border-red-300"} border text-sm`}>
         {bookingError}
       </div>
     )}
