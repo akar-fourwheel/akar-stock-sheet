@@ -8,7 +8,7 @@ const dealerFormData = async (req, res) => {
     let query;
   
     if(carYear && carModel && carFuel){
-      query = encodeURIComponent(`SELECT K, M, B, COUNT(K) WHERE C = ${carYear} AND I='${carModel}' AND J='${carFuel}' GROUP BY I, J, K, M, B ORDER BY B DESC`)
+      query = encodeURIComponent(`SELECT K, M, B, COUNT(K) WHERE C = ${carYear} AND UPPER(I)='${carModel.toUpperCase()}' AND UPPER(J)='${carFuel.toUpperCase()}' GROUP BY I, J, K, M, B ORDER BY B DESC`)
     }
   
   const token = await googleSecurityHeader();
