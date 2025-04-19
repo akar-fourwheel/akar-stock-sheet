@@ -16,7 +16,7 @@ const BookingForm = () => {
   const [orderC, setOrderC] = useState("");
   const [bookingError, setBookingError] = useState("");
   const [errorColor,setErrorColor] = useState('')
-  const [remark,setRemark] = useState('')
+  const [remark,setRemark] = useState(' ')
 
   const finalAmt = parseFloat(resData[6]) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
