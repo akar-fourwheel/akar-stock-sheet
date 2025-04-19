@@ -846,6 +846,12 @@ const quotationPage = () => {
                       menuIsOpen={undefined}
                       maxMenuHeight={200}
                       classNamePrefix="react-select"
+                      menuPlacement="auto" // 👈 auto will try top if no space at bottom
+                      menuPosition="absolute"
+                      menuPortalTarget={document.body} // 👈 render dropdown at the top of the DOM
+                      styles={{
+                        menuPortal: base => ({ ...base, zIndex: 9999 }) // 👈 ensure it's on top
+                      }}
                     />
                     <div>Accessories Amount: </div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
@@ -869,6 +875,12 @@ const quotationPage = () => {
                       options={hpnOptions}
                       onChange={handleHpn}
                       value={selectedHpn}
+                      menuPlacement="auto" // 👈 auto will try top if no space at bottom
+                      menuPosition="absolute"
+                      menuPortalTarget={document.body} // 👈 render dropdown at the top of the DOM
+                      styles={{
+                        menuPortal: base => ({ ...base, zIndex: 9999 }) // 👈 ensure it's on top
+                      }}
                       className="w-full p-1 rounded-lg"
                     />
                   </> :
