@@ -12,10 +12,13 @@ const BookingForm = () => {
   const [resData, setResData] = useState({});
   const [color, setColor] = useState("");
   const [colorList,setColorList] = useState([]);
+  const [orderCat,setOrderCat] = useState(["individual","corporate"]);
+  const [orderC, setOrderC] = useState("");
   const [bookingError, setBookingError] = useState("");
   const [errorColor,setErrorColor] = useState('')
-  
-  const finalAmt = parseFloat(resData[5]) || 0;
+  const [remark,setRemark] = useState('')
+
+  const finalAmt = parseFloat(resData[6]) || 0;
   const RemainingAmt = finalAmt - parseFloat(bookingAmount || 0);
 
   const handleBooking = () => {
@@ -23,12 +26,15 @@ const BookingForm = () => {
       axios.post(`/booking-process`, {
         quoteID,
         customer:resData[0],
-        sales_adv:resData[6],
-        year: resData[1],
+        contact:resData[1],
+        sales_adv:resData[7],
+        year: resData[2],
         bookingAmount: bookingAmount,
         RemainingAmount: RemainingAmt,
         color,
-        variant: resData[2]
+        variant: resData[3],
+        orderC,
+        remark
       })
       .then(response =>{
         console.log( response.data?.chassisNo);
@@ -44,12 +50,13 @@ const BookingForm = () => {
 
             axios.post('/booking-request',{
               quoteID,
-              sales_adv:resData[6],
+              sales_adv:resData[7],
               customer:resData[0],
-              year:resData[1],
-              variant:resData[2],
-              fuel:resData[7],
-              color
+              contact:resData[1],
+              year:resData[2],
+              variant:resData[3],
+              fuel:resData[8],
+              color,
             })
             .then(res => {
               if(res.data = "request raised"){
@@ -80,15 +87,15 @@ const BookingForm = () => {
   
     axios.get(`/booking-form`, {
       params: { quoteID },
-    }).then((res) => {
+    }).then((res) => {      
       setResData(res.data);
-      setColor(res.data[3]);
+      setColor(res.data[4]);
   
-      if (!res.data[3] || res.data[3] === "N/A") {
+      if (!res.data[4] || res.data[4] === "N/A") {
         axios.get(`/booking-color`, {
           params: {
-            year: res.data[1],
-            variant: res.data[2],
+            year: res.data[2],
+            variant: res.data[3],
           },
         }).then((res) => {
           setColorList(res.data);
@@ -98,7 +105,7 @@ const BookingForm = () => {
   }, [quoteID]);
 
   useEffect(() => {
-    const maxAmount = resData[5];
+    const maxAmount = resData[6];
     if (bookingAmount > maxAmount) {
       setBookingAmount(maxAmount);
     }
@@ -111,8 +118,10 @@ const BookingForm = () => {
 
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-sm text-gray-700">
       <Field label="Customer Name" value={resData[0]} />
-      <Field label="Model Year" value={resData[1]} />
-      <Field label="Variant" value={resData[2]} />
+      <Field label="Contat Number" value={resData[1]} />
+      <Field label="Sales Executive" value={resData[7]} />
+      <Field label="Model Year" value={resData[2]} />
+      <Field label="Variant" value={resData[3]} />
 
       <div className="flex flex-col">
         <label className="text-gray-600 mb-1 font-medium">Color</label>
@@ -140,8 +149,24 @@ const BookingForm = () => {
         )}
       </div>
 
-      <Field label="Total Discount" value={resData[4]} />
-      <Field label="Final Amount" value={resData[5]} />
+      <div className="flex flex-col">
+      <label className="text-gray-600 mb-1 font-medium">Select Order Category</label>
+        <select
+              className="p-2 border border-gray-300 rounded-lg"
+              value={orderC}
+              onChange={(e) => setOrderC(e.target.value)}
+            >
+              <option value="">Order Category</option>
+              {orderCat.map((clr, index) => (
+                <option key={index} value={clr}>
+                  {clr}
+                </option>
+              ))}
+            </select>
+       </div>
+
+      <Field label="Total Discount" value={resData[5]} />
+      <Field label="Final Amount" value={resData[6]} />
 
       <div className="flex flex-col">
         <label className="text-gray-600 mb-1 font-medium">Booking Amount</label>
@@ -161,6 +186,15 @@ const BookingForm = () => {
         {bookingError}
       </div>
     )}
+          <div className="flex flex-col">
+        <label className="text-gray-600 mb-1 font-medium">Remark</label>
+        <input
+          type="text"
+          className="p-2 border border-gray-300 rounded-lg"
+          value={remark} 
+          onChange={(e) => setRemark(e.target.value)}
+        />
+      </div>
 
     <button
       type="submit"

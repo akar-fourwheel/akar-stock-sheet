@@ -6,12 +6,12 @@ const BOOK_SHEET_ID = "1tDWKz804lqfo0syFuD8gBLGwdVdwcWoUfPro0Yc41AA"
 const sheets = google.sheets({version: 'v4', auth: serviceAccountAuth})
 
 const bookingProcessController = async(req,res) => {
-    const { quoteID, year,sales_adv,customer, bookingAmount, RemainingAmount, color, variant } = req.body;
+    const { quoteID, year ,sales_adv,customer, contact, bookingAmount, RemainingAmount, color, variant, orderC, remark } = req.body;
     console.log(year, variant, color);      
     
     try {
         // Get car data and row index to delete
-        const { carToBook, rowIdx } = await status();
+        const { carToBook, rowIdx } = await status(year,variant,color);
       
         // Delete the row from Dealer Stock
         const deleteRequest = {
@@ -33,7 +33,7 @@ const bookingProcessController = async(req,res) => {
         };
         await sheets.spreadsheets.batchUpdate(deleteRequest);
 
-        const finalRow = ["BI-"+quoteID, quoteID,sales_adv,customer, ...carToBook, bookingAmount, RemainingAmount];        
+        const finalRow = ["BI-"+ quoteID, quoteID,sales_adv,customer,contact,orderC, ...carToBook,, bookingAmount, RemainingAmount,remark];        
       
         // Push car data to Booking Stock
         await sheets.spreadsheets.values.append({
@@ -51,11 +51,13 @@ const bookingProcessController = async(req,res) => {
       }
     catch(e){
         console.log("Couldn't post!");
+        console.log(e);
+        
         res.send("Couldn't post!");
     }
 }
 
-const status = async () => {
+const status = async (year,variant,color) => {
   let rowIdx = -1;
   let maxAge = -Infinity;
 
@@ -70,12 +72,16 @@ const status = async () => {
   // Skip header
   for (let i = 1; i < rows.length; i++) {
     const row = rows[i];
+    console.log(row);
+    
     const age = parseFloat(row[1]);
 
     const matches =
-      row[2] === year &&
+      row[2] == year &&
       row[10].toUpperCase() === variant.toUpperCase() &&
       row[12].toUpperCase() === color.toUpperCase();
+      console.log(matches);
+      
 
     if (matches && !isNaN(age) && age > maxAge) {
       maxAge = age;
