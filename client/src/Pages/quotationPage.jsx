@@ -487,7 +487,7 @@ const quotationPage = () => {
       trunkMat: (selectedAcc.some((opt) => opt.label === "Trunk Mat") ? selectedAcc.find((opt) => opt.label === "Trunk Mat").value : 0), 
       perfume: (selectedAcc.some((opt) => opt.label === "Perfume") ? selectedAcc.find((opt) => opt.label === "Perfume").value : 0), 
       ganeshji: (selectedAcc.some((opt) => opt.label === "Ganesh Ji") ? selectedAcc.find((opt) => opt.label === "Ganesh Ji").value : 0), 
-      camera: cameraOption.label,
+      camera: (cameraOption ? cameraOption.label : " "),
       cameraVal: cameraOption.value,
       bodyCover: (selectedAcc.some((opt) => opt.label === "Car Cover") ? selectedAcc.find((opt) => opt.label === "Car Cover").value : 0),
       accTotal: accTotal, 
