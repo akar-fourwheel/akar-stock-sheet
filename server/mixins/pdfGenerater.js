@@ -62,12 +62,13 @@ const appendToSheet = async (Qdata) => {
   try {
     const flatData = flattenJSON(Qdata);
     const row = Object.values(flatData);
+    console.log(row.length);
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
       range: SHEET_NAME,
       valueInputOption: "RAW",
       insertDataOption: "INSERT_ROWS",
-      requestBody: { values: [row] },
+      requestBody: { values: [row] },      
     });
   } catch (err) {
     console.error("Error adding to Google Sheet:", err);

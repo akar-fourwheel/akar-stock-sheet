@@ -435,6 +435,10 @@ const quotationPage = () => {
     if (!validateForm()) {
       return; // Don't proceed if there are validation errors
     }
+
+    const cameraOption = selectedAcc.find(
+      (opt) => opt.label == "Camera" || opt.label == "TFT Display Camera"
+    )
     var Qdata = {
       date: currentDate,
       name: name.toUpperCase(),
@@ -483,6 +487,9 @@ const quotationPage = () => {
       trunkMat: (selectedAcc.some((opt) => opt.label === "Trunk Mat") ? selectedAcc.find((opt) => opt.label === "Trunk Mat").value : 0), 
       perfume: (selectedAcc.some((opt) => opt.label === "Perfume") ? selectedAcc.find((opt) => opt.label === "Perfume").value : 0), 
       ganeshji: (selectedAcc.some((opt) => opt.label === "Ganesh Ji") ? selectedAcc.find((opt) => opt.label === "Ganesh Ji").value : 0), 
+      camera: cameraOption.label,
+      cameraVal: cameraOption.value,
+      bodyCover: (selectedAcc.some((opt) => opt.label === "Car Cover") ? selectedAcc.find((opt) => opt.label === "Car Cover").value : 0),
       accTotal: accTotal, 
       inc: finalData.Insurance, 
       rsa: (selectedInsurance.some((opt) => opt.value === "RSA") ? finalData["RSA"] : 0), 
@@ -870,7 +877,7 @@ const quotationPage = () => {
                   <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[key]}</div>
                   {i == 30 && <>
                   <div>Total Price:</div>
-                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.FastTag + (scrap ? 35000 : 0)}</div> 
+                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.FastTag + cod}</div> 
                   </>}
                 </>}
                 </Fragment>
