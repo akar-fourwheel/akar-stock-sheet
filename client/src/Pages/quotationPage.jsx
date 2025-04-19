@@ -43,7 +43,10 @@ const quotationPage = () => {
   const [currentDate, setCurrentDate] = useState("");
   const [selectedSalesPerson, setSelectedSalesPerson] = useState("");
   const [pdfUrl,setPdfUrl] = useState('');
+  const [cod, setCod] = useState(0);
   const [whatsAppUrl,setWhatsAppUrl] = useState('');
+  const [showWarning, setShowWarning] = useState(false);
+  const [maxAddDisc, setMaxAddDisc] = useState(0);
   const [errors, setErrors] = useState({
       name: false,
       address: false,
@@ -58,7 +61,6 @@ const quotationPage = () => {
 
   const discounts = [
     { value: 'CONSUMER', label: 'Consumer' },
-    { value: 'EXCHANGE', label: 'Exchange' },
     { value: 'INTERVENTION', label: 'Intervention' },
     { value: 'CORPORATE_TOP_10', label: 'Corporate Top 10' },
     { value: 'CORPORATE_TOP_20', label: 'Corporate Top 20' },
@@ -109,11 +111,37 @@ const quotationPage = () => {
     { "label": "Yes Bank", "value": "Yes Bank" },
     { "label": "N/A", "value": "N/A" }
   ];
+
+  const restState = () => {
+    setSelectedInsurance([]);
+    setSelectedDiscounts([]);
+    setAddExc(0);
+    setLoyalty(0);
+    setCorpOffer("");
+    setAddDisc(0);
+    setSss(0);
+    setRto("RTO");
+    setTotalDisc(0);
+    setEw();
+    setAccessories([]);
+    setSelectedAcc([]);
+    setSelectedColor();
+    setSelectedVas();
+    setSelectedHpn();
+    setTotalAddOns(0);
+    setAccTotal(0);
+    setLoyaltyType();
+    setScrap();
+    setCod(0);
+    setShowWarning(false);
+  }
   
 
   // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    restState();
+    
     axios.get(`/quotation-data`, {
       params: {
         year: year,
@@ -261,14 +289,59 @@ const quotationPage = () => {
   }
 
   const handleCorpOffer = (selected) => {
-    finalData[selected.value] ? setCorpOffer(selected.value) : setCorpOffer("")
-    
+    if (finalData[selected.value]) {
+      setCorpOffer(selected.value);
+      if (2025 == finalData.YEAR && fuel == 'Electric') {
+        setAddDisc(0);
+        setShowWarning(false);
+      }
+    }
+    else setCorpOffer("")
   }
 
   const handleAddDisc = (e) => {
-    const trimmed = e.target.value.replace(/^0+(?!$)/, '');
-    setAddDisc(trimmed);
-  }
+    const val = e.target.value.replace(/^0+(?!$)/, '');
+  
+    if (isNaN(val) || val == 0) {
+      setAddDisc(0);
+      setShowWarning(false);
+      return;
+    }
+  
+    if (finalData.YEAR == 2025) {
+      let max = finalData.AddDiscLim;
+  
+      const pplUpper = finalData.PPL?.toUpperCase();
+      if (pplUpper == "SAFARI" || pplUpper == "HARRIER") {
+        max -= cod;
+      }
+  
+      if (finalData.Fuel == "Electric") {
+        max -= finalData[corpOffer] || 0;
+      }
+  
+      if (val <= max) {
+        setAddDisc(val);
+        setShowWarning(false);
+      } else {
+        setShowWarning(true);
+      }
+  
+      setMaxAddDisc(max);
+      console.log(maxAddDisc, cod, max);
+      
+    } else {
+      setAddDisc(val);
+      setShowWarning(false);
+    }
+  };
+
+  useEffect(() => {
+    const maxAmount = finalData.AddDiscLim;
+    if (addDisc > maxAmount) {
+      setAddDisc(maxAmount);
+    }
+  }, [addDisc, rto]);
 
   const handleSss = (e) => {
     const trimmed = e.target.value.replace(/^0+(?!$)/, '');
@@ -277,7 +350,21 @@ const quotationPage = () => {
 
   const handleRto = (selected) => {
     setRto(selected.value)
-  }
+    setShowWarning(false)
+    
+    if (finalData.YEAR == 2025) {
+      setMaxAddDisc(finalData.AddDiscLim);
+    }
+
+    if ("Scrap RTO" == selected.value) { 
+      setCod(finalData.COD)
+      const pplUpper = finalData.PPL?.toUpperCase();
+      if (2025 == finalData.YEAR && (pplUpper == "SAFARI" || pplUpper == "HARRIER")) {
+        setAddDisc(0);
+        setShowWarning(false);
+      } }
+    else { setCod(0) }
+    }
 
   const handleEw = (selected) => {
     selected ? setEw(selected.value) : setEw()
@@ -307,6 +394,7 @@ const quotationPage = () => {
       phoneNo: false,
       email: false,
       selectedSalesPerson: false,
+      addDisc: false
     };
 
     if (!name.trim() || !/^[A-Za-z\s]+$/.test(name)) {
@@ -327,6 +415,10 @@ const quotationPage = () => {
     }
     if (!selectedSalesPerson) {
       validationErrors.selectedSalesPerson = true;
+      isValid = false;
+    }
+    if (addDisc > maxAddDisc) {
+      validationErrors.addDisc = true;
       isValid = false;
     }
 
@@ -628,7 +720,7 @@ const quotationPage = () => {
                       </>}
                     <div>Select Discount Type:</div>
                     <Select
-                      options={[...discounts.filter(x => finalData[x.value] > 0), (finalData['MSME'] || finalData['SOLER']) ? { value: 'CORPORATE OFFER', label: 'Corporate Offer' } : { value: 'None', label: 'None' }].filter(x => x.value != "None")}
+                      options={[...discounts.filter(x => finalData[x.value] > 0), (finalData['MSME'] || finalData['SOLER']) ? { value: 'CORPORATE OFFER', label: 'Corporate Offer' } : { value: 'None', label: 'None' }, (finalData['EXCHANGE']+finalData['ADDITIONAL EXCHANGE']+finalData['ICE to EV']+finalData['EV to EV'] > 0 ) ? { value: 'EXCHANGE', label: 'Exchange' } : { value: 'None', label: 'None' }].filter(x => x.value != "None")}
                       isMulti
                       value={selectedDiscounts}
                       onChange={handleDiscount}
@@ -664,11 +756,18 @@ const quotationPage = () => {
                     />
                   </>}
                     <div>Additional Discount:</div>
+                    <div>
                       <input className="w-full p-2 border border-gray-300 rounded-lg" 
                       type="number"
                       value={addDisc}
                       onChange={handleAddDisc}
                       />
+                      {showWarning && (
+                        <p style={{ color: 'red', marginTop: '0.5rem' }}>
+                          Value cannot exceed {maxAddDisc}.
+                        </p>
+                      )}
+                      </div>
                       <div>SSS:</div>
                       <input className="w-full p-2 border border-gray-300 rounded-lg" 
                       type="number"
@@ -701,7 +800,7 @@ const quotationPage = () => {
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
                         {finalData[rto]}
                       </div>
-                    {(rto === "Scrap RTO") &&
+                    {(cod > 0) &&
                     <>
                       <div>Scrap by: </div>
                       <Select
