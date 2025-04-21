@@ -308,7 +308,7 @@ const quotationPage = () => {
       return;
     }
   
-    if (finalData.YEAR == 2025) {
+    if (finalData.YEAR == 2025 && finalData.Fuel == "Electric") {
       let max = finalData.AddDiscLim;
   
       const pplUpper = finalData.PPL?.toUpperCase();
@@ -338,7 +338,7 @@ const quotationPage = () => {
 
   useEffect(() => {
     const maxAmount = finalData.AddDiscLim;
-    if (addDisc > maxAmount) {
+    if (finalData.YEAR == 2025 && finalData.Fuel == "Electric" &&addDisc > maxAmount) {
       setAddDisc(maxAmount);
     }
   }, [addDisc, rto]);
@@ -358,11 +358,12 @@ const quotationPage = () => {
 
     if ("Scrap RTO" == selected.value) { 
       setCod(finalData.COD)
-      const pplUpper = finalData.PPL?.toUpperCase();
-      if (2025 == finalData.YEAR && (pplUpper == "SAFARI" || pplUpper == "HARRIER")) {
-        setAddDisc(0);
-        setShowWarning(false);
-      } }
+      // const pplUpper = finalData.PPL?.toUpperCase();
+      // if (2025 == finalData.YEAR && (pplUpper == "SAFARI" || pplUpper == "HARRIER")) {
+      //   setAddDisc(0);
+      //   setShowWarning(false);
+      // }
+      }
     else { setCod(0) }
     }
 
@@ -884,14 +885,18 @@ const quotationPage = () => {
                       className="w-full p-1 rounded-lg"
                     />
                   </> :
-                <>
-                  <div key={i}>{key} :</div>
-                  <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[key]}</div>
-                  {i == 30 && <>
-                  <div>Total Price:</div>
-                  <div className="w-full p-2 border border-gray-300 rounded-lg">{ totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.FastTag + cod}</div> 
-                  </>}
-                </>}
+                      <>
+                        {i < 31 && <>
+                          <div>{key} :</div>
+                          <div className="w-full p-2 border border-gray-300 rounded-lg">{finalData[key]}</div>
+                        </>}
+                        { i === 31 && <>
+                          <div>Total Price:</div>
+                          <div className="w-full p-2 border border-gray-300 rounded-lg">
+                            { totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + finalData.Insurance + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.FastTag + cod}
+                          </div>
+                        </>}
+                      </>}
                 </Fragment>
           ))}
         </div>
