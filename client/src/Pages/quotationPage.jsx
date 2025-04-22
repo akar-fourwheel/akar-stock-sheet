@@ -23,7 +23,7 @@ const quotationPage = () => {
   const [corpOffer, setCorpOffer] = useState("");
   const [addDisc, setAddDisc] = useState(0);
   const [sss, setSss] = useState(0);
-  const [rto, setRto] = useState("RTO");
+  const [rto, setRto] = useState({ value: 'RTO', label: 'Normal RTO' });
   const [totalDisc, setTotalDisc] = useState(0);
   const [ew, setEw] = useState();
   const [accessories, setAccessories] = useState([]);
@@ -31,7 +31,7 @@ const quotationPage = () => {
   const [color, setColor] = useState([]);
   const [selectedColor, setSelectedColor] = useState();
   const [selectedVas, setSelectedVas] = useState();
-  const [selectedHpn, setSelectedHpn] = useState("Not for Loan Use");
+  const [selectedHpn, setSelectedHpn] = useState({ label: "Not for Loan Use", value: "N/A" });
   const [totalAddOns, setTotalAddOns] = useState(0);
   const [accTotal, setAccTotal] = useState(0);
   const [loyaltyType, setLoyaltyType] = useState();
@@ -44,6 +44,7 @@ const quotationPage = () => {
   const [selectedSalesPerson, setSelectedSalesPerson] = useState("");
   const [pdfUrl,setPdfUrl] = useState('');
   const [cod, setCod] = useState(0);
+  const [hpn, setHpn] = useState("");
   const [whatsAppUrl,setWhatsAppUrl] = useState('');
   const [ins, setIns] = useState(0);
   const [insType, setInsType] = useState("Dealer")
@@ -131,13 +132,14 @@ const quotationPage = () => {
     setCorpOffer("");
     setAddDisc(0);
     setSss(0);
-    setRto("RTO");
+    setRto({ value: 'RTO', label: 'Normal RTO' });
     setTotalDisc(0);
     setEw();
     setSelectedAcc([]);
     setSelectedColor();
     setSelectedVas();
-    setSelectedHpn("Not for Loan Use");
+    setSelectedHpn({ label: "Not for Loan Use", value: "N/A" });
+    setHpn("");
     setTotalAddOns(0);
     setAccTotal(0);
     setLoyaltyType();
@@ -363,15 +365,15 @@ const quotationPage = () => {
   }
 
   const handleRto = (selected) => {
-    setRto(selected.value)
+    setRto(selected)
     setShowWarning(false)
     
     if (finalData.YEAR == 2025) {
       setMaxAddDisc(finalData.AddDiscLim);
     }
 
-    if ("Scrap RTO" == selected.value) { 
-      setCod(finalData.COD)
+    if ("Scrap RTO" == selected.value) {      
+      scrap ? setCod(finalData.COD) : setCod(0)      
       // const pplUpper = finalData.PPL?.toUpperCase();
       // if (2025 == finalData.YEAR && (pplUpper == "SAFARI" || pplUpper == "HARRIER")) {
       //   setAddDisc(0);
@@ -398,7 +400,7 @@ const quotationPage = () => {
   }
 
   const handleHpn = (selected) => {
-    setSelectedHpn(selected.label)
+    setSelectedHpn(selected)
   }
   
   const validateForm = () => {
@@ -463,7 +465,7 @@ const quotationPage = () => {
       email: email,
       address: address, 
       salesPerson: selectedSalesPerson, 
-      HPN: (inhouse ? selectedHpn + ": In-House" : selectedHpn + ": Out-House"),
+      HPN: (inhouse ? selectedHpn.label + ": In-House" : hpn + ": Out-House"),
       year: finalData.YEAR, 
       model: finalData.PPL, 
       fuel: finalData.Fuel, 
@@ -488,10 +490,10 @@ const quotationPage = () => {
       totalDisc: totalDisc,  
       billingPrice: finalData.ESP - totalDisc, 
       tcs: tcs, 
-      rtoType: rto, 
-      rtoAmt: finalData[rto],
-      scrapBy: (scrap ? "Dealer" : rto == "Scrap RTO" ? "Self" : "N/A"), 
-      cod: (scrap ? 35000 : 0), 
+      rtoType: rto.value, 
+      rtoAmt: finalData[rto.value],
+      scrapBy: (scrap ? "Dealer" : rto.value == "Scrap RTO" ? "Self" : "N/A"), 
+      cod: cod, 
       mudflap: (selectedAcc.some((opt) => opt.label === "Mudflap") ? selectedAcc.find((opt) => opt.label === "Mudflap").value : 0), 
       uniMatting: (selectedAcc.some((opt) => opt.label === "Universal Matting") ? selectedAcc.find((opt) => opt.label === "Universal Matting").value : 0), 
       seatCover: (selectedAcc.some((opt) => opt.label === "Seat Cover") ? selectedAcc.find((opt) => opt.label === "Seat Cover").value : 0), 
@@ -778,8 +780,8 @@ const quotationPage = () => {
                       <>
                       <input className="w-full p-2 border border-gray-300 rounded-lg" 
                       type="text"
-                      value={selectedHpn}
-                      onChange={(e) => {setSelectedHpn(e.target.value)}}
+                      value={hpn}
+                      onChange={(e) => {setHpn(e.target.value)}}
                       />
                       </>}
                       </>}
@@ -863,15 +865,15 @@ const quotationPage = () => {
                     />
                     <div>RTO Amount: </div>
                       <div className="w-full p-2 border border-gray-300 rounded-lg">
-                        {finalData[rto]}
+                        {finalData[rto.value]}
                       </div>
-                    {(cod > 0) &&
+                    {(rto.value == "Scrap RTO") &&
                     <>
                       <div>Scrap by: </div>
                       <Select
                       isClearable
                         options={[{value: true, label: 'Dealer' }, { value: false, label: 'Self' }]}
-                        onChange={(selected) => {setScrap(selected && selected.value)}}
+                        onChange={(selected) => {setScrap(selected && selected.value); setCod((selected && selected.value) ? finalData.COD : 0)}}
                         className="w-full p-1 rounded-lg"
                       />
                     </>
@@ -941,7 +943,8 @@ const quotationPage = () => {
                         { i === 31 && <>
                           <div>Total Price:</div>
                           <div className="w-full p-2 border border-gray-300 rounded-lg">
-                            { totalESP = finalData.ESP - totalDisc + (finalData[rto] ? finalData[rto] : 0) + totalAddOns + ins + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.FastTag + cod}
+                            {console.log(cod)}
+                            { totalESP = finalData.ESP - totalDisc + (finalData[rto.value] ? finalData[rto.value] : 0) + totalAddOns + ins + tcs + (finalData[ew] ? finalData[ew] : 0) + accTotal + (selectedVas ? selectedVas.value : 0) + finalData.FastTag + cod}
                           </div>
                         </>}
                       </>}
