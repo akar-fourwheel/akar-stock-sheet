@@ -1,6 +1,6 @@
 import express from 'express';
 
-import generatePDF from '../mixins/pdfGenerater.js';
+import generatePDF from '../services/pdfGenerater.js';
 
 const pdfRoute = express.Router();
 

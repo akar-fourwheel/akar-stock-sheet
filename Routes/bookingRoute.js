@@ -1,4 +1,5 @@
 import express from 'express';
+import { authenticateJWT, checkRole } from '../middleware/auth.js'
 
 import bookingOptionsController from '../Controller/booking/bookingOptionsController.js'
 import bookingFormController from '../Controller/booking/bookingFormController.js';
@@ -11,6 +12,10 @@ import bookingReqestController from '../Controller/booking/bookingRequestControl
 import BookingRequestNotification from '../Controller/booking/bookingRequestNotification.js';
 
 const bookingRoute = express.Router();
+
+// Apply authentication and role check to all routes
+bookingRoute.use(authenticateJWT);
+bookingRoute.use(checkRole(['sales']));
 
 bookingRoute.get('/booking-page',bookingPageController);
 bookingRoute.get('/booking-form', bookingFormController);

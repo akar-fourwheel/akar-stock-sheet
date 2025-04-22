@@ -1,4 +1,5 @@
 import express from 'express'
+import { authenticateJWT, checkRole } from '../middleware/auth.js'
 
 import dealerController from '../Controller/stockSheet/dealerController.js'
 import plantController from '../Controller/stockSheet/plantController.js'
@@ -7,9 +8,13 @@ import zonalController from '../Controller/stockSheet/zonalController.js'
 
 const stockSheetRoute = express.Router();
 
-stockSheetRoute.get('/stock/dealership-data',dealerController);
-stockSheetRoute.get('/stock/plant-data',plantController);
-stockSheetRoute.get('/stock/zawl-data',zawlController);
-stockSheetRoute.get('/stock/zonal-data',zonalController);
+// Apply authentication and role check to all routes
+stockSheetRoute.use(authenticateJWT);
+stockSheetRoute.use(checkRole(['sales']));
+
+stockSheetRoute.get('/stock/dealership-data', dealerController);
+stockSheetRoute.get('/stock/plant-data', plantController);
+stockSheetRoute.get('/stock/zawl-data', zawlController);
+stockSheetRoute.get('/stock/zonal-data', zonalController);
 
 export default stockSheetRoute;
