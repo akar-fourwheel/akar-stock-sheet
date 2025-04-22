@@ -123,7 +123,7 @@ const quotationPage = () => {
     { label: "Cash", value: "Cash" }
   ];
 
-  const restState = (insAmount) => {
+  const restState = (insAmount, year, maxDisc) => {
     setSelectedInsurance([]);
     setSelectedDiscounts([]);
     setAddExc(0);
@@ -146,6 +146,9 @@ const quotationPage = () => {
     setShowWarning(false);
     setIns(insAmount);
     setInsType("Dealer");
+    if (year == 2025) {
+      setMaxAddDisc(maxDisc);
+    }
   }
   
 
@@ -168,7 +171,7 @@ const quotationPage = () => {
       setColor(data2);
       setAccessories(data1)
       setFinalData(data);
-      restState(data.Insurance);      
+      restState(data.Insurance, data.YEAR, data.AddDiscLim);      
     });
   };
 
@@ -340,7 +343,6 @@ const quotationPage = () => {
       }
   
       setMaxAddDisc(max);
-      console.log(maxAddDisc, cod, max);
       
     } else {
       setAddDisc(val);
@@ -430,6 +432,8 @@ const quotationPage = () => {
       validationErrors.selectedSalesPerson = true;
       isValid = false;
     }
+    console.log(addDisc, maxAddDisc);
+    
     if (addDisc > maxAddDisc) {
       validationErrors.addDisc = true;
       isValid = false;
@@ -520,8 +524,6 @@ const quotationPage = () => {
       vas: selectedVas ? selectedVas.value : " ", 
       fasttag: finalData.FastTag, 
       grandTotal: totalESP, };
-
-      console.log(Qdata);
       
       try {
         setLoading(true);
@@ -892,7 +894,6 @@ const quotationPage = () => {
                         {finalData[ew]}
                       </div>
                       <div>Accessories: </div>
-                      {console.log(accessories)}
                     <Select
                       options={accessories.filter(x => x.value > 0)}
                       isMulti
