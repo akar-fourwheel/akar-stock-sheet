@@ -374,11 +374,11 @@ const quotationPage = () => {
 
     if ("Scrap RTO" == selected.value) {      
       scrap ? setCod(finalData.COD) : setCod(0)      
-      // const pplUpper = finalData.PPL?.toUpperCase();
-      // if (2025 == finalData.YEAR && (pplUpper == "SAFARI" || pplUpper == "HARRIER")) {
-      //   setAddDisc(0);
-      //   setShowWarning(false);
-      // }
+      const pplUpper = finalData.PPL?.toUpperCase();
+      if (2025 == finalData.YEAR && (pplUpper == "SAFARI" || pplUpper == "HARRIER")) {
+        setAddDisc(0);
+        setShowWarning(false);
+      }
       }
     else { setCod(0) }
     }
