@@ -137,9 +137,14 @@ const generatePDF = async (req, res) => {
     const logoBase64 = logoBuffer.toString('base64');
     const logoSrc = `data:image/png;base64,${logoBase64}`;
 
+    const sealPath = path.join(__dirname, 'seal.png')
+    const sealBuffer = await fs.readFile(sealPath);
+    const sealBase64 = sealBuffer.toString('base64');
+    const sealSrc = `data:image/png;base64,${sealBase64}`;
+
     // ✅ Compile and fill HTML template using Handlebars
     const template = Handlebars.compile(htmlTemplate);
-    const filledHtml = template({ Qdata, logoSrc });
+    const filledHtml = template({ Qdata, logoSrc, sealSrc });
 
     // ✅ Generate PDF
     const pdfBuffer = await generatePDFBuffer(filledHtml);
